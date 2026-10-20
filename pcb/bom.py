@@ -18,3 +18,10 @@ with open("production/ahm-panel-bom.csv", "w", newline="") as f:
     w.writerow(["Comment", "Designator", "Footprint", "LCSC", "Qty", "Fitted by"])
     for (val, fp, lcsc), refs in sorted(groups.items(), key=lambda g: g[1][0]):
         w.writerow([val, ",".join(refs), fp, lcsc, len(refs), "JLCPCB" if lcsc else "hand (through-hole)"])
+
+# KiCad placement file -> JLCPCB column names (Designator, Mid X, Mid Y, Layer, Rotation)
+with open("production/ahm-panel-cpl-top.csv") as src, open("production/ahm-panel-cpl-jlc.csv", "w", newline="") as f:
+    w = csv.writer(f)
+    w.writerow(["Designator", "Mid X", "Mid Y", "Layer", "Rotation"])
+    for r in csv.DictReader(src):
+        w.writerow([r["Ref"], r["PosX"] + "mm", r["PosY"] + "mm", "Top", r["Rot"]])
