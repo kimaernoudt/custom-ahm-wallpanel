@@ -37,4 +37,4 @@ The Pro Micro has no network, so it sends each detent over USB and `serial_bridg
 2. Flash `firmware/promicro_encoder_test` (board "Arduino Leonardo"). Check that the Serial Monitor prints `+`, `-` and `P`, then close it.
 3. Run `python3 tools/serial_bridge.py` (defaults: 127.0.0.1, controls TRAP). Use `--target sas`, `toog`, `dj` and so on for another channel, or `--ahm <ip>` for the real AHM.
 
-Turning steps the level, pressing toggles mute. If turning right lowers the level, swap the A and B wires.
+Turning sets the level (2 steps per click, change with `--step`), pressing toggles mute. If turning right lowers the level, swap the A and B wires.

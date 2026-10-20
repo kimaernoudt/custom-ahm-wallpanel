@@ -6,7 +6,8 @@
     python3 serial_bridge.py --port /dev/cu.usbmodem14101
 
 The Pro Micro (firmware/promicro_encoder_test) prints "+" / "-" per detent and "P" per press.
-Turning steps the level up/down, pressing toggles mute. No extra packages needed (macOS / Linux).
+Turning sets the level (--step values per detent, absolute "set level" like the panel),
+pressing toggles mute. No extra packages needed (macOS / Linux).
 """
 import argparse
 import glob
@@ -47,6 +48,7 @@ def main():
     ap.add_argument("--ahm", default="127.0.0.1", help="AHM or System Manager IP (default 127.0.0.1)")
     ap.add_argument("--target", default="trap", choices=TARGETS, help="what the encoder controls")
     ap.add_argument("--port", help="serial port of the Pro Micro")
+    ap.add_argument("--step", type=int, default=2, help="level change per detent (default 2)")
     args = ap.parse_args()
 
     n, ch = TARGETS[args.target]
@@ -58,13 +60,15 @@ def main():
     print(f"Pro Micro on {port} -> {args.ahm}:{ahm.PORT}, controlling {name}. Ctrl+C to stop.")
 
     muted = False
+    level = ahm.LEVEL_0DB   # replaced by the AHM's real level as soon as it answers
 
-    def reader():   # print what the AHM reports back, and track the mute state
-        nonlocal muted
+    def reader():   # print what the AHM reports back, and track level and mute
+        nonlocal muted, level
         parser = ahm.Parser()
         while data := sock.recv(1024):
             for ev in parser.feed(data):
                 if ev[0] == "level" and ev[1:3] == (n, ch):
+                    level = ev[3]
                     print(f"   AHM: {name} level = {ahm.level_text(ev[3])}")
                 elif ev[0] == "mute" and ev[1:3] == (n, ch):
                     muted = ev[3]
@@ -82,8 +86,9 @@ def main():
             continue
         line, buf = buf.strip(), b""
         if line in (b"+", b"-"):
-            sock.sendall(ahm.step_level(n, ch, line == b"+"))
-            print(f"turn {line.decode()}  -> level {'up' if line == b'+' else 'down'}")
+            level = max(0, min(127, level + (args.step if line == b"+" else -args.step)))
+            sock.sendall(ahm.set_level(n, ch, level))
+            print(f"turn {line.decode()}  -> set level {ahm.level_text(level)}")
         elif line == b"P":
             muted = not muted
             sock.sendall(ahm.mute(n, ch, muted))
