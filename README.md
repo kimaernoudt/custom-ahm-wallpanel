@@ -32,7 +32,7 @@ The 2D laser-cut file is in `design/faceplate-cut.svg` (1:1 mm, red = cut, blue 
 ## Firmware
 - `firmware/ahm_test/`: first connection test with 1 encoder (GPIO32/33) and 1 button (GPIO4). Set your AHM's IP address at the top, then build with the board "OLIMEX ESP32-PoE".
 - `firmware/promicro_encoder_test/`: one encoder on a Pro Micro over USB, via `tools/serial_bridge.py`.
-- Full panel firmware: to do.
+- `firmware/ahm_panel/`: **the full panel firmware**, set up per room from a web page. See its [README](firmware/ahm_panel/README.md).
 
 ## Test without hardware
 [`tools/`](tools/) has a virtual panel for your computer and a fake AHM that prints every command it receives,
