@@ -10,7 +10,7 @@ A DIY wall controller for an Allen & Heath **AHM-16** (cafe install).
   - TRAP: control group 1
   - SAS: control group 2
   - TOOG: zone 3
-- Turn a knob to change the level. Press it to mute, and its ring turns red.
+- Turn a knob to change the level. Pressing a knob does nothing; a ring turns red if that channel is muted from elsewhere.
 - **4 lit buttons** recall scenes 1–4: START, IPAD, DJ, EXTRA.
 - The panel talks to the AHM over its TCP control protocol (port 51325) and runs on a single PoE network cable.
 

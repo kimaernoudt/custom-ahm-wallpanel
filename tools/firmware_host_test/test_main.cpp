@@ -25,8 +25,8 @@ int main(int argc, char **argv) {
   run(1500);
   printf("--- status after connect\n%s", statusText().c_str());
   printf("--- turn TRAP +3, SAS -2\n"); turn(1, 3); turn(2, -2); run(200);
-  printf("--- press SAS (mute)\n"); push(2); run(100);
-  printf("SAS ring LED0 colour %06X (expect FF0000)\n", rings.px[2 * 12]);
+  printf("--- press SAS (does nothing)\n"); push(2); run(100);
+  printf("SAS ring LED0 colour %06X (expect not FF0000)\n", rings.px[2 * 12]);
   printf("TRAP ring lit LEDs: "); for (int i = 0; i < 12; i++) printf("%c", rings.px[12 + i] ? '#' : '.'); printf("\n");
   printf("--- press DJ button\n"); ladder(1050); run(600);
   printf("button LEDs olat %04X (expect bit14 = DJ)\n", (unsigned)sim_olat);

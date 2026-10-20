@@ -1,7 +1,7 @@
 // AHM wall panel firmware for the Olimex ESP32-POE
 //
-// 4 encoders with LED rings set levels and mute; 4 lit buttons recall scenes on an Allen & Heath AHM
-// over its TCP control protocol (port 51325). The rings follow level and mute changes made elsewhere.
+// 4 encoders with LED rings set levels; 4 lit buttons recall scenes on an Allen & Heath AHM
+// over its TCP control protocol (port 51325). The rings follow level changes made elsewhere and turn red if a channel is muted elsewhere.
 //
 // Arduino IDE: board "OLIMEX ESP32-PoE" (esp32 by Espressif, 2.x or 3.x), library "Adafruit NeoPixel".
 // First boot uses the cafe defaults in settings.h. After that, set the panel up for any room at
@@ -254,15 +254,7 @@ void loop() {
     }
   }
 
-  // knob presses: mute toggle
-  uint8_t pushes = takePushes();
-  for (int k = 0; k < 4; k++) {
-    Knob &kn = knobs[k];
-    if (!(pushes & (1 << k)) || kn.n < 0 || !ahm.connected()) continue;
-    kn.mute = kn.mute == 1 ? 0 : 1;
-    ahm.setMute(kn.n, kn.ch, kn.mute);
-    ringsDirty = true;
-  }
+  takePushes();   // knob presses do nothing (no mute on this panel)
 
   // scene buttons
   int b = pollLadder();

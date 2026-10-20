@@ -24,7 +24,7 @@ Hold the Olimex **BUT1** button while powering up to go back to the defaults (al
 After the first USB upload, updates go over the network: Arduino IDE > Tools > Port > the panel's network port.
 
 ## How it behaves
-- Turning sends an absolute level (faster turning moves further). Pressing a knob toggles mute; the ring turns red.
+- Turning sends an absolute level (faster turning moves further). Pressing a knob does nothing (no mute); a ring turns red if the channel is muted from elsewhere.
 - Rings show the AHM's real level and follow changes made in System Manager or Custom Control.
 - A scene button recalls the scene, lights up, and re-reads all levels.
 - If the AHM is unreachable the rings show a slow amber dot and the active button blinks; the panel reconnects by itself
