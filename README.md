@@ -33,5 +33,9 @@ The 2D laser-cut file is in `design/faceplate-cut.svg` (1:1 mm, red = cut, blue 
 - `firmware/ahm_test/`: first connection test with 1 encoder (GPIO32/33) and 1 button (GPIO4). Set your AHM's IP address at the top, then build with the board "OLIMEX ESP32-PoE".
 - Full panel firmware: to do.
 
+## Test without hardware
+[`tools/`](tools/) has a virtual panel for your computer and a fake AHM that prints every command it receives,
+so you can check the protocol against System Manager, the real AHM, or nothing at all. See [tools/README.md](tools/README.md).
+
 ## Docs
 - [docs/ahm-protocol-and-config.md](docs/ahm-protocol-and-config.md): AHM TCP commands and a summary of the cafe show file
