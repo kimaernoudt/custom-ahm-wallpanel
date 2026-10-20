@@ -4,3 +4,4 @@ pcb/build/
 pcb/*.kicad_prl
 pcb/fp-info-cache
 __pycache__/
+pcb/logs/
