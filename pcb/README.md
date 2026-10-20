@@ -14,7 +14,7 @@ MCP23017 sit on it. One 10-wire UEXT cable and one 2-wire 5 V cable go to the Ol
 - Faceplate for this board: `openscad -D PCB=true -D 'part="faceplate"' 3d/ahm-panel.scad` (`3d/faceplate-pcb.stl`).
   It has light tubes round each LED window so the LEDs don't bleed into each other, and no ring pockets.
 - Button caps: `3d/buttoncap.stl`, print 4 in clear/natural PETG. They sit on the switches, flange behind the faceplate,
-  and a WS2812B-2020 under each flange lights the cap.
+  and a WS2812B (the same 5050 LED as the rings) under each flange lights the cap.
 
 ![section](../3d/render-pcb-fit.png)
 
@@ -48,7 +48,7 @@ the button LEDs as pixels 48-51 of the LED chain.
 ```
 python3 place.py                      # parts + netlist -> ahm-panel-placed.kicad_pcb, parts.csv
 python3 route.py freerouting-2.1.0.jar   # autoroute, GND pours, DRC -> ahm-panel.kicad_pcb, drc.rpt
-python3 bom.py                        # -> production/ahm-panel-bom.csv
+./export.sh                           # gerbers, drill, placement, BOM -> production/
 ```
 
 KiCad 7. DRC: 0 unconnected, no copper errors. The remaining warnings are the ring LED courtyards touching (the

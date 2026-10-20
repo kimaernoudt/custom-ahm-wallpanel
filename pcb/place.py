@@ -95,8 +95,9 @@ for k, cx in enumerate(KX):
                 g.SetLayer(pcbnew.F_Fab)
 for j, b in enumerate([3, 2, 1, 0]):          # EXTRA, DJ, IPAD, START
     n = 48 + j
-    add(f"LED{n + 1}", "WS2812B-2020", "LED_SMD", "LED_WS2812B-2020_PLCC4_2.0x2.0mm", KX[b], BY - 5.4,
-        pads={"1": "+5V", "2": (dnet(n + 1) if j < 3 else None), "3": "GND", "4": dnet(n)}, lcsc="C965555")
+    # same 5050 part as the rings (one part type, in stock); sits under the cap flange, clear of the switch pads
+    add(f"LED{n + 1}", "WS2812B-B", "LED_SMD", "LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm", KX[b], BY - 6.5,
+        pads={"1": "+5V", "2": (dnet(n + 1) if j < 3 else None), "3": "GND", "4": dnet(n)}, lcsc="C2761795")
 
 # ---------------- scene buttons + resistor ladder (one analog pin) ----------------
 LADDER_R = [None, "2.2k", "4.7k", "10k"]
@@ -120,8 +121,10 @@ add("R5", "10k", "Resistor_SMD", "R_0805_2012Metric", 98, 82, rot=0, pads={"1": 
 
 # ---------------- connectors (on the back) ----------------
 # J1 = UEXT from the Olimex: 1 3V3, 2 GND, 3 GPIO4 (LED data), 4 GPIO36 (buttons), 5 SCL GPIO16, 6 SDA GPIO13
-add("J1", "UEXT 2x5 box header", "Connector_IDC", "IDC-Header_2x05_P2.54mm_Vertical", 46, 79, rot=90, back=True,
-    origin=(1.27, 5.08), pads={"1": "+3V3", "2": "GND", "3": "LED_3V3", "4": "LADDER", "5": "SCL", "6": "SDA"})
+j1 = add("J1", "UEXT 2x5 box header", "Connector_IDC", "IDC-Header_2x05_P2.54mm_Vertical", 46, 79, rot=90,
+         back=True, origin=(1.27, 5.08),
+         pads={"1": "+3V3", "2": "GND", "3": "LED_3V3", "4": "LADDER", "5": "SCL", "6": "SDA"})
+j1.FindPadByNumber("2").SetZoneConnection(pcbnew.ZONE_CONNECTION_FULL)   # tracks leave room for only 1 thermal spoke
 add("R6", "4.7k", "Resistor_SMD", "R_0805_2012Metric", 58, 77, rot=90, pads={"1": "+3V3", "2": "SDA"})
 add("R7", "4.7k", "Resistor_SMD", "R_0805_2012Metric", 58, 82, rot=90, pads={"1": "+3V3", "2": "SCL"})
 # J2 = 5 V from the Olimex for the LEDs
