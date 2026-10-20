@@ -1,7 +1,8 @@
 // AHM cafe wall panel: faceplate + surface-mount back box
 // Units: mm. Render a single part with:  openscad -D 'part="faceplate"' -o faceplate.stl ahm-panel.scad
-// part = "faceplate" | "labels" | "backbox" | "assembly"
+// part = "faceplate" | "labels" | "backbox" | "buttoncap" | "assembly"
 part = "assembly";
+PCB = false;          // true = faceplate for the panel PCB (pcb/): light baffles instead of ring pockets
 
 $fn = 64;
 
@@ -24,6 +25,13 @@ LED_D  = 2.4;       // LED window
 RING_POCKET_D = 38.5;   // pocket on the back for the LED ring PCB
 RING_POCKET_T = 1.2;
 ENGRAVE = 0.6;      // label depth
+// panel PCB version: PCB hangs on the encoder nuts, its front 6.5 mm behind the faceplate
+PCB_GAP  = 6.5;     // PCB front to faceplate back (EC11E body height)
+BAFFLE_D = 4.2;     // light tube round each ring LED window, stops bleed between LEDs
+CAP_D = 12;         // translucent cap on a 6x6 mm, 5 mm tact switch
+CAP_FLANGE_D = 15;
+CAP_FLANGE_T = 1;
+SW_H = 5;
 
 // ---- screws ----
 CS  = 6;            // corner screw inset
@@ -60,9 +68,19 @@ module label_text(h) {
     translate([12, fy(KY + 29.5) - 0.2, 0]) cube([W - 24, 0.4, h]);
 }
 
+module led_windows(d, h, z) {
+    for (i = [0:3]) for (a = [0:30:330])
+        translate([KX[i] + LED_R * sin(a), fy(KY) + LED_R * cos(a), z]) cylinder(d = d, h = h);
+}
+
 module faceplate() {
     difference() {
-        rounded(W, H, T, R);
+        union() {
+            rounded(W, H, T, R);
+            // PCB version: tubes on the back reach down to 0.6 mm above the LEDs (1.6 mm high)
+            if (PCB) led_windows(BAFFLE_D, PCB_GAP - 2.2, -(PCB_GAP - 2.2));
+        }
+        if (PCB) led_windows(LED_D, PCB_GAP + T, -PCB_GAP);
         for (i = [0:3]) {
             // encoder shaft
             translate([KX[i], fy(KY), -1]) cylinder(d = ENC_D, h = T + 2);
@@ -71,7 +89,7 @@ module faceplate() {
                 translate([KX[i] + LED_R * sin(a), fy(KY) + LED_R * cos(a), -1])
                     cylinder(d = LED_D, h = T + 2);
             // pocket for the LED ring on the back
-            translate([KX[i], fy(KY), -0.01]) cylinder(d = RING_POCKET_D, h = RING_POCKET_T);
+            if (!PCB) translate([KX[i], fy(KY), -0.01]) cylinder(d = RING_POCKET_D, h = RING_POCKET_T);
             // button
             translate([KX[i], fy(BY), -1]) cylinder(d = BTN_D, h = T + 2);
         }
@@ -88,6 +106,13 @@ module faceplate() {
 
 // labels as a separate body, for a white inlay on multi-material printers
 module labels() { translate([0, 0, T - ENGRAVE]) label_text(ENGRAVE); }
+
+// PCB version: translucent button cap (print in clear PETG/PLA), sits on the tact switch, flange behind the faceplate
+module buttoncap() {
+    stem = PCB_GAP + T + 1 - SW_H - CAP_FLANGE_T;   // stands 1 mm proud of the front
+    cylinder(d = CAP_FLANGE_D, h = CAP_FLANGE_T);
+    translate([0, 0, CAP_FLANGE_T]) cylinder(d = CAP_D, h = stem);
+}
 
 module keyhole() {
     translate([0, 0, -1]) {
@@ -119,9 +144,28 @@ module backbox() {
     }
 }
 
+// cut away everything in front of the button centre line (for the "pcbfit" section view)
+module cut() difference() { children(); translate([-1, -1, -1]) cube([W + 2, fy(BY) + 1, D + 20]); }
+
 if (part == "faceplate") faceplate();
 else if (part == "labels") labels();
 else if (part == "backbox") backbox();
+else if (part == "buttoncap") buttoncap();
+else if (part == "pcbfit") {   // section through the button row: faceplate, PCB on the encoder nuts, box
+    color("#3a3d42") cut() backbox();
+    color("#1c1d20") cut() translate([0, 0, D]) faceplate();
+    // PCB 1.6 mm, notched corners for the bosses
+    color("#1f7a3a") cut() translate([0, 0, D - PCB_GAP - 1.6]) linear_extrude(1.6) difference() {
+        translate([4, 4]) square([W - 8, H - 8]);
+        for (p = [[0, 0], [W - 11, 0], [0, H - 11], [W - 11, H - 11]]) translate(p) square(11);
+    }
+    for (i = [0:3]) {
+        color("#9aa0a6") cut() translate([KX[i] - 6, fy(KY) - 6.5, D - PCB_GAP]) cube([12, 13, PCB_GAP]);   // EC11E body
+        color("#c8c8c8") cut() translate([KX[i], fy(KY), D - PCB_GAP]) cylinder(d = 7, h = PCB_GAP + T + 2);
+        color("#e0e0e0") cut() translate([KX[i] - 3, fy(BY) - 3, D - PCB_GAP]) cube([6, 6, SW_H]);
+        color("#f2f2f2") cut() translate([KX[i], fy(BY), D - PCB_GAP + SW_H]) buttoncap();
+    }
+}
 else {
     color("#3a3d42") backbox();
     color("#1c1d20") translate([0, 0, D]) faceplate();

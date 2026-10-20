@@ -1,2 +1,6 @@
 .DS_Store
 *.bak
+pcb/build/
+pcb/*.kicad_prl
+pcb/fp-info-cache
+__pycache__/

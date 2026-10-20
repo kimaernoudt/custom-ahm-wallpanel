@@ -1,11 +1,17 @@
 // Panel hardware: MCP23017 (encoders, push switches, button LEDs), resistor-ladder scene buttons, WS2812 rings.
-// Pin-out matches wiring/WIRING.md.
+// Pin-out matches wiring/WIRING.md (hand-wired) or pcb/README.md (PCB).
 #pragma once
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_NeoPixel.h>
 
-const int PIN_SDA = 13, PIN_SCL = 16, PIN_LEDS = 4, PIN_LADDER = 33;
+// 0 = hand-wired panel (ring modules, button LEDs on the MCP23017, ladder on GPIO33)
+// 1 = panel PCB (rings and button LEDs in one WS2812 chain, ladder on GPIO36 via UEXT pin 4)
+#ifndef PANEL_PCB
+#define PANEL_PCB 0
+#endif
+
+const int PIN_SDA = 13, PIN_SCL = 16, PIN_LEDS = 4, PIN_LADDER = PANEL_PCB ? 36 : 33;
 const uint8_t MCP_ADDR = 0x20;
 const int LEDS_PER_RING = 12;
 
@@ -134,7 +140,16 @@ uint8_t takePushes() {
   return p;
 }
 
-void setButtonLeds(uint8_t mask) {   // bit per button
+// ---- LED rings (+ button LEDs on the PCB: pixels 48..51 = EXTRA, DJ, IPAD, START) ----
+const int NUM_PIXELS = 4 * LEDS_PER_RING + (PANEL_PCB ? 4 : 0);
+Adafruit_NeoPixel rings(NUM_PIXELS, PIN_LEDS, NEO_GRB + NEO_KHZ800);
+
+void setButtonLeds(uint8_t mask) {   // bit per button; on the PCB this only fills the pixel buffer, show() sends it
+#if PANEL_PCB
+  for (int i = 0; i < 4; i++)        // lit = active scene, the rest glow faintly so they can be found in the dark
+    rings.setPixelColor(4 * LEDS_PER_RING + 3 - i, mask & (1 << i) ? rings.Color(255, 255, 255) : rings.Color(12, 12, 12));
+  return;
+#endif
   uint16_t v = 0;
   for (int i = 0; i < 4; i++)
     if (mask & (1 << i)) v |= 1 << BTN_LED[i];
@@ -155,9 +170,6 @@ int pollLadder() {
   stable = b;
   return b;
 }
-
-// ---- LED rings ----
-Adafruit_NeoPixel rings(4 * LEDS_PER_RING, PIN_LEDS, NEO_GRB + NEO_KHZ800);
 
 void ringsBegin(uint8_t brightness) {
   rings.begin();

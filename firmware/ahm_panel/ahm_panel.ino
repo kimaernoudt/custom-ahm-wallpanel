@@ -191,10 +191,9 @@ void drawRings() {
       if (f > 0) px(p, rings.Color(0, (uint8_t)(200 * f), (uint8_t)(180 * f)));
     }
   }
-  rings.show();
-
   bool blink = (millis() / 500) % 2;
   setButtonLeds(ahm.connected() || blink ? 1 << activeButton : 0);
+  rings.show();
 }
 
 // ---------- main ----------

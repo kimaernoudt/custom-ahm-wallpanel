@@ -20,11 +20,14 @@ A DIY wall controller for an Allen & Heath **AHM-16** (cafe install).
 
 ![Wiring](wiring/wiring.png)
 
+Or skip the hand wiring: [`pcb/`](pcb/) has a ready-to-order panel PCB (KiCad 7, gerbers + JLCPCB assembly files) that carries the encoders, buttons, all LEDs and the MCP23017, and connects to the Olimex with one UEXT cable.
+
 ## Enclosure
 3D-printable, 170 × 90 mm faceplate on a 35 mm deep surface-mount back box with keyholes for wall screws. See [`3d/`](3d/):
 - `faceplate.stl`: print it face-down
 - `backbox.stl`
 - `labels.stl` (optional): white inlay for multi-material printers
+- `faceplate-pcb.stl` + `buttoncap.stl`: the faceplate and translucent button caps for the panel PCB
 - `ahm-panel.scad`: parametric source. Export a part with `openscad -D 'part="faceplate"' -o faceplate.stl ahm-panel.scad`
 
 The 2D laser-cut file is in `design/faceplate-cut.svg` (1:1 mm, red = cut, blue = engrave).

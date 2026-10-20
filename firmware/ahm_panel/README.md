@@ -2,6 +2,7 @@
 
 ## Install
 1. Arduino IDE: add the "esp32 by Espressif" boards (2.x or 3.x) and the library **Adafruit NeoPixel**.
+   For the panel PCB (`pcb/`), set `#define PANEL_PCB 1` at the top of `panel_io.h`.
 2. Open `ahm_panel.ino`, choose board **OLIMEX ESP32-PoE**, upload over USB once.
 3. Plug the panel into a PoE port. The Serial Monitor (115200) prints its address, e.g. `Ethernet up: http://192.168.1.57/`.
 
