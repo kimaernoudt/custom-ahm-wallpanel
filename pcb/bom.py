@@ -1,6 +1,7 @@
 """parts.csv -> production/ahm-panel-bom.csv in JLCPCB format (Comment, Designator, Footprint, LCSC).
 
-SMD parts are for JLCPCB assembly; the through-hole parts (encoders, buttons, connectors) are soldered by hand.
+Only the SMD parts JLCPCB fits go in that BOM; the through-hole parts (encoders, buttons, connectors) are soldered
+by hand and listed in production/hand-solder.csv.
 """
 import csv
 from collections import defaultdict
@@ -13,11 +14,15 @@ groups = defaultdict(list)
 for r in csv.DictReader(open("parts.csv")):
     lcsc = r["lcsc"] or LCSC.get((r["footprint"], r["value"]), "")
     groups[(r["value"], r["footprint"], lcsc)].append(r["ref"])
-with open("production/ahm-panel-bom.csv", "w", newline="") as f:
-    w = csv.writer(f)
-    w.writerow(["Comment", "Designator", "Footprint", "LCSC", "Qty", "Fitted by"])
+with open("production/ahm-panel-bom.csv", "w", newline="") as f, open("production/hand-solder.csv", "w", newline="") as h:
+    w, wh = csv.writer(f), csv.writer(h)
+    w.writerow(["Comment", "Designator", "Footprint", "LCSC"])
+    wh.writerow(["Part", "Designator", "Footprint", "Qty"])
     for (val, fp, lcsc), refs in sorted(groups.items(), key=lambda g: g[1][0]):
-        w.writerow([val, ",".join(refs), fp, lcsc, len(refs), "JLCPCB" if lcsc else "hand (through-hole)"])
+        if lcsc:
+            w.writerow([val, ",".join(refs), fp, lcsc])
+        else:
+            wh.writerow([val, ",".join(refs), fp, len(refs)])
 
 # KiCad placement file -> JLCPCB column names (Designator, Mid X, Mid Y, Layer, Rotation)
 with open("production/ahm-panel-cpl-top.csv") as src, open("production/ahm-panel-cpl-jlc.csv", "w", newline="") as f:

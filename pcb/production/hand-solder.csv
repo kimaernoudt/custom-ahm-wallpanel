@@ -1,0 +1,5 @@
+Part,Designator,Footprint,Qty
+"EC11E with switch, 20 mm shaft","ENC1,ENC2,ENC3,ENC4",RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm,4
+UEXT 2x5 box header,J1,IDC-Header_2x05_P2.54mm_Vertical,1
+JST XH 2-pin,J2,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,1
+"6x6 mm tact, 5 mm high","SW1,SW2,SW3,SW4",SW_PUSH_6mm_H5mm,4
