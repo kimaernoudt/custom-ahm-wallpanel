@@ -1,5 +1,5 @@
 ** Drc report for ahm-panel.kicad_pcb **
-** Created on 2026-10-20 16:37:36 **
+** Created on 2026-10-21 06:40:25 **
 
 ** Found 132 DRC violations **
 [silk_overlap]: Silkscreen overlap
@@ -8,238 +8,238 @@
     @(121.1900 mm, 76.4900 mm): Line on B.Silkscreen
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(58.0000 mm, 82.0000 mm): Footprint R7
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(137.5000 mm, 27.5000 mm): Footprint ENC4
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(11.0000 mm, 52.5000 mm): Footprint R8
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(152.5000 mm, 17.0096 mm): Footprint LED43
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(98.0000 mm, 82.0000 mm): Footprint R5
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(65.0000 mm, 15.0000 mm): Footprint LED18
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(105.0000 mm, 45.0000 mm): Footprint LED36
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(57.5000 mm, 17.0096 mm): Footprint LED17
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(130.0000 mm, 30.0000 mm): Footprint LED39
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(145.0000 mm, 61.5000 mm): Footprint LED49
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(115.0000 mm, 54.0000 mm): Footprint C7
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(152.5000 mm, 42.9904 mm): Footprint LED47
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(157.9904 mm, 22.5000 mm): Footprint LED44
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(137.5000 mm, 42.9904 mm): Footprint LED37
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(12.0096 mm, 22.5000 mm): Footprint LED4
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(133.0000 mm, 82.0000 mm): Footprint C4
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(155.0000 mm, 54.0000 mm): Footprint C8
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(37.9904 mm, 37.5000 mm): Footprint LED10
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(32.5000 mm, 42.9904 mm): Footprint LED11
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(65.0000 mm, 61.5000 mm): Footprint LED51
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(112.5000 mm, 42.9904 mm): Footprint LED35
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(25.0000 mm, 61.5000 mm): Footprint LED52
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(141.7500 mm, 65.7500 mm): Footprint SW4
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(61.7500 mm, 65.7500 mm): Footprint SW2
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(57.5000 mm, 42.9904 mm): Footprint LED13
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
     @(160.0000 mm, 30.0000 mm): Footprint LED45
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(21.7500 mm, 65.7500 mm): Footprint SW1
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(25.0000 mm, 15.0000 mm): Footprint LED6
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(12.0096 mm, 37.5000 mm): Footprint LED2
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(85.0000 mm, 79.0000 mm): Footprint U1
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(37.0000 mm, 66.0000 mm): Footprint R1
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(72.5000 mm, 42.9904 mm): Footprint LED23
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(10.0000 mm, 30.0000 mm): Footprint LED3
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(97.5000 mm, 27.5000 mm): Footprint ENC3
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(92.0096 mm, 37.5000 mm): Footprint LED26
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(117.0000 mm, 82.0000 mm): Footprint C3
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(58.0000 mm, 77.0000 mm): Footprint R6
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(40.0000 mm, 30.0000 mm): Footprint LED9
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(101.7500 mm, 65.7500 mm): Footprint SW3
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(37.9904 mm, 22.5000 mm): Footprint LED8
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(77.9904 mm, 37.5000 mm): Footprint LED22
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(145.0000 mm, 45.0000 mm): Footprint LED48
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(132.0096 mm, 22.5000 mm): Footprint LED40
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(90.0000 mm, 30.0000 mm): Footprint LED27
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(157.9904 mm, 37.5000 mm): Footprint LED46
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(25.0000 mm, 45.0000 mm): Footprint LED12
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(37.0000 mm, 71.0000 mm): Footprint C1
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(57.5000 mm, 27.5000 mm): Footprint ENC2
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(112.5000 mm, 17.0096 mm): Footprint LED31
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
     @(132.0096 mm, 37.5000 mm): Footprint LED38
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(80.0000 mm, 30.0000 mm): Footprint LED21
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(113.0000 mm, 68.0000 mm): Footprint R3
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(117.9904 mm, 22.5000 mm): Footprint LED32
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(11.0000 mm, 61.5000 mm): Footprint C9
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(32.5000 mm, 17.0096 mm): Footprint LED7
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(65.0000 mm, 45.0000 mm): Footprint LED24
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(97.5000 mm, 17.0096 mm): Footprint LED29
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(52.0096 mm, 22.5000 mm): Footprint LED16
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(50.0000 mm, 30.0000 mm): Footprint LED15
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(11.0000 mm, 57.0000 mm): Footprint U2
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(35.0000 mm, 54.0000 mm): Footprint C5
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(77.9904 mm, 22.5000 mm): Footprint LED20
+    @(98.0000 mm, 82.0000 mm): Footprint R5
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
     @(72.5000 mm, 17.0096 mm): Footprint LED19
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(17.5000 mm, 17.0096 mm): Footprint LED5
+    @(141.7500 mm, 65.7500 mm): Footprint SW4
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(52.0096 mm, 37.5000 mm): Footprint LED14
+    @(57.5000 mm, 42.9904 mm): Footprint LED13
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(75.0000 mm, 54.0000 mm): Footprint C6
+    @(37.9904 mm, 37.5000 mm): Footprint LED10
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(145.0000 mm, 15.0000 mm): Footprint LED42
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(105.0000 mm, 61.5000 mm): Footprint LED50
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(17.5000 mm, 42.9904 mm): Footprint LED1
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(105.0000 mm, 15.0000 mm): Footprint LED30
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(72.0000 mm, 82.0000 mm): Footprint C2
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(117.9904 mm, 37.5000 mm): Footprint LED34
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(120.0000 mm, 30.0000 mm): Footprint LED33
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(92.0096 mm, 22.5000 mm): Footprint LED28
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(153.0000 mm, 68.0000 mm): Footprint R4
-[lib_footprint_issues]: The current configuration does not include the library ''.
-    Local override; Severity: warning
-    @(97.5000 mm, 42.9904 mm): Footprint LED25
+    @(137.5000 mm, 42.9904 mm): Footprint LED37
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
     @(73.0000 mm, 68.0000 mm): Footprint R2
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
+    @(157.9904 mm, 37.5000 mm): Footprint LED46
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(105.0000 mm, 61.5000 mm): Footprint LED50
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(117.0000 mm, 82.0000 mm): Footprint C3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(120.0000 mm, 30.0000 mm): Footprint LED33
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(152.5000 mm, 17.0096 mm): Footprint LED43
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(152.5000 mm, 42.9904 mm): Footprint LED47
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(133.0000 mm, 82.0000 mm): Footprint C4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(97.5000 mm, 17.0096 mm): Footprint LED29
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(90.0000 mm, 30.0000 mm): Footprint LED27
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(50.0000 mm, 30.0000 mm): Footprint LED15
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(97.5000 mm, 27.5000 mm): Footprint ENC3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(145.0000 mm, 61.5000 mm): Footprint LED49
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(117.9904 mm, 37.5000 mm): Footprint LED34
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
     @(17.5000 mm, 27.5000 mm): Footprint ENC1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(115.0000 mm, 54.0000 mm): Footprint C7
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(25.0000 mm, 15.0000 mm): Footprint LED6
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(37.0000 mm, 71.0000 mm): Footprint C1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(132.0096 mm, 22.5000 mm): Footprint LED40
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(65.0000 mm, 45.0000 mm): Footprint LED24
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(37.0000 mm, 66.0000 mm): Footprint R1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(153.0000 mm, 68.0000 mm): Footprint R4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(155.0000 mm, 54.0000 mm): Footprint C8
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(80.0000 mm, 30.0000 mm): Footprint LED21
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(130.0000 mm, 30.0000 mm): Footprint LED39
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(35.0000 mm, 54.0000 mm): Footprint C5
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(40.0000 mm, 30.0000 mm): Footprint LED9
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(32.5000 mm, 17.0096 mm): Footprint LED7
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(112.5000 mm, 17.0096 mm): Footprint LED31
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(12.0096 mm, 22.5000 mm): Footprint LED4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(57.5000 mm, 27.5000 mm): Footprint ENC2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(117.9904 mm, 22.5000 mm): Footprint LED32
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(85.0000 mm, 79.0000 mm): Footprint U1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(77.9904 mm, 22.5000 mm): Footprint LED20
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(61.7500 mm, 65.7500 mm): Footprint SW2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(105.0000 mm, 45.0000 mm): Footprint LED36
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(52.0096 mm, 37.5000 mm): Footprint LED14
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(113.0000 mm, 68.0000 mm): Footprint R3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(137.5000 mm, 27.5000 mm): Footprint ENC4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(157.9904 mm, 22.5000 mm): Footprint LED44
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(25.0000 mm, 45.0000 mm): Footprint LED12
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(65.0000 mm, 61.5000 mm): Footprint LED51
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(37.9904 mm, 22.5000 mm): Footprint LED8
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(145.0000 mm, 15.0000 mm): Footprint LED42
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(72.5000 mm, 42.9904 mm): Footprint LED23
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(77.9904 mm, 37.5000 mm): Footprint LED22
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(72.0000 mm, 82.0000 mm): Footprint C2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(58.0000 mm, 77.0000 mm): Footprint R6
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(52.0096 mm, 22.5000 mm): Footprint LED16
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(11.0000 mm, 52.5000 mm): Footprint R8
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(145.0000 mm, 45.0000 mm): Footprint LED48
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(57.5000 mm, 17.0096 mm): Footprint LED17
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(32.5000 mm, 42.9904 mm): Footprint LED11
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(11.0000 mm, 57.0000 mm): Footprint U2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(17.5000 mm, 42.9904 mm): Footprint LED1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(75.0000 mm, 54.0000 mm): Footprint C6
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(112.5000 mm, 42.9904 mm): Footprint LED35
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(58.0000 mm, 82.0000 mm): Footprint R7
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(10.0000 mm, 30.0000 mm): Footprint LED3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(11.0000 mm, 61.5000 mm): Footprint C9
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(92.0096 mm, 37.5000 mm): Footprint LED26
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(97.5000 mm, 42.9904 mm): Footprint LED25
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(92.0096 mm, 22.5000 mm): Footprint LED28
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(65.0000 mm, 15.0000 mm): Footprint LED18
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(17.5000 mm, 17.0096 mm): Footprint LED5
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(21.7500 mm, 65.7500 mm): Footprint SW1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(105.0000 mm, 15.0000 mm): Footprint LED30
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(12.0096 mm, 37.5000 mm): Footprint LED2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(25.0000 mm, 61.5000 mm): Footprint LED52
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(101.7500 mm, 65.7500 mm): Footprint SW3
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
     @(137.5000 mm, 17.0096 mm): Footprint LED41
@@ -259,84 +259,28 @@
     @(56.2900 mm, 86.1000 mm): Line on B.Silkscreen
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(152.5000 mm, 17.0096 mm): Footprint LED43
-    @(157.9904 mm, 22.5000 mm): Footprint LED44
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(152.5000 mm, 17.0096 mm): Footprint LED43
-    @(145.0000 mm, 15.0000 mm): Footprint LED42
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(65.0000 mm, 15.0000 mm): Footprint LED18
-    @(57.5000 mm, 17.0096 mm): Footprint LED17
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(65.0000 mm, 15.0000 mm): Footprint LED18
-    @(72.5000 mm, 17.0096 mm): Footprint LED19
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(105.0000 mm, 45.0000 mm): Footprint LED36
-    @(112.5000 mm, 42.9904 mm): Footprint LED35
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(105.0000 mm, 45.0000 mm): Footprint LED36
-    @(97.5000 mm, 42.9904 mm): Footprint LED25
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(57.5000 mm, 17.0096 mm): Footprint LED17
-    @(52.0096 mm, 22.5000 mm): Footprint LED16
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(130.0000 mm, 30.0000 mm): Footprint LED39
-    @(132.0096 mm, 22.5000 mm): Footprint LED40
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(130.0000 mm, 30.0000 mm): Footprint LED39
-    @(132.0096 mm, 37.5000 mm): Footprint LED38
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(152.5000 mm, 42.9904 mm): Footprint LED47
-    @(145.0000 mm, 45.0000 mm): Footprint LED48
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(152.5000 mm, 42.9904 mm): Footprint LED47
+    @(160.0000 mm, 30.0000 mm): Footprint LED45
     @(157.9904 mm, 37.5000 mm): Footprint LED46
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(157.9904 mm, 22.5000 mm): Footprint LED44
     @(160.0000 mm, 30.0000 mm): Footprint LED45
+    @(157.9904 mm, 22.5000 mm): Footprint LED44
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(137.5000 mm, 42.9904 mm): Footprint LED37
-    @(145.0000 mm, 45.0000 mm): Footprint LED48
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(137.5000 mm, 42.9904 mm): Footprint LED37
     @(132.0096 mm, 37.5000 mm): Footprint LED38
+    @(137.5000 mm, 42.9904 mm): Footprint LED37
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(12.0096 mm, 22.5000 mm): Footprint LED4
-    @(10.0000 mm, 30.0000 mm): Footprint LED3
+    @(132.0096 mm, 37.5000 mm): Footprint LED38
+    @(130.0000 mm, 30.0000 mm): Footprint LED39
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(12.0096 mm, 22.5000 mm): Footprint LED4
-    @(17.5000 mm, 17.0096 mm): Footprint LED5
+    @(72.5000 mm, 17.0096 mm): Footprint LED19
+    @(77.9904 mm, 22.5000 mm): Footprint LED20
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(37.9904 mm, 37.5000 mm): Footprint LED10
-    @(32.5000 mm, 42.9904 mm): Footprint LED11
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(37.9904 mm, 37.5000 mm): Footprint LED10
-    @(40.0000 mm, 30.0000 mm): Footprint LED9
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(32.5000 mm, 42.9904 mm): Footprint LED11
-    @(25.0000 mm, 45.0000 mm): Footprint LED12
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(112.5000 mm, 42.9904 mm): Footprint LED35
-    @(117.9904 mm, 37.5000 mm): Footprint LED34
+    @(72.5000 mm, 17.0096 mm): Footprint LED19
+    @(65.0000 mm, 15.0000 mm): Footprint LED18
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
     @(57.5000 mm, 42.9904 mm): Footprint LED13
@@ -347,8 +291,68 @@
     @(52.0096 mm, 37.5000 mm): Footprint LED14
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(160.0000 mm, 30.0000 mm): Footprint LED45
+    @(37.9904 mm, 37.5000 mm): Footprint LED10
+    @(40.0000 mm, 30.0000 mm): Footprint LED9
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(37.9904 mm, 37.5000 mm): Footprint LED10
+    @(32.5000 mm, 42.9904 mm): Footprint LED11
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(137.5000 mm, 42.9904 mm): Footprint LED37
+    @(145.0000 mm, 45.0000 mm): Footprint LED48
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
     @(157.9904 mm, 37.5000 mm): Footprint LED46
+    @(152.5000 mm, 42.9904 mm): Footprint LED47
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(120.0000 mm, 30.0000 mm): Footprint LED33
+    @(117.9904 mm, 37.5000 mm): Footprint LED34
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(120.0000 mm, 30.0000 mm): Footprint LED33
+    @(117.9904 mm, 22.5000 mm): Footprint LED32
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(152.5000 mm, 17.0096 mm): Footprint LED43
+    @(157.9904 mm, 22.5000 mm): Footprint LED44
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(152.5000 mm, 17.0096 mm): Footprint LED43
+    @(145.0000 mm, 15.0000 mm): Footprint LED42
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(152.5000 mm, 42.9904 mm): Footprint LED47
+    @(145.0000 mm, 45.0000 mm): Footprint LED48
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(97.5000 mm, 17.0096 mm): Footprint LED29
+    @(92.0096 mm, 22.5000 mm): Footprint LED28
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(97.5000 mm, 17.0096 mm): Footprint LED29
+    @(105.0000 mm, 15.0000 mm): Footprint LED30
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(90.0000 mm, 30.0000 mm): Footprint LED27
+    @(92.0096 mm, 37.5000 mm): Footprint LED26
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(90.0000 mm, 30.0000 mm): Footprint LED27
+    @(92.0096 mm, 22.5000 mm): Footprint LED28
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(50.0000 mm, 30.0000 mm): Footprint LED15
+    @(52.0096 mm, 37.5000 mm): Footprint LED14
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(50.0000 mm, 30.0000 mm): Footprint LED15
+    @(52.0096 mm, 22.5000 mm): Footprint LED16
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(117.9904 mm, 37.5000 mm): Footprint LED34
+    @(112.5000 mm, 42.9904 mm): Footprint LED35
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
     @(25.0000 mm, 15.0000 mm): Footprint LED6
@@ -359,96 +363,92 @@
     @(17.5000 mm, 17.0096 mm): Footprint LED5
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(12.0096 mm, 37.5000 mm): Footprint LED2
-    @(10.0000 mm, 30.0000 mm): Footprint LED3
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(12.0096 mm, 37.5000 mm): Footprint LED2
-    @(17.5000 mm, 42.9904 mm): Footprint LED1
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(72.5000 mm, 42.9904 mm): Footprint LED23
-    @(77.9904 mm, 37.5000 mm): Footprint LED22
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(72.5000 mm, 42.9904 mm): Footprint LED23
-    @(65.0000 mm, 45.0000 mm): Footprint LED24
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(92.0096 mm, 37.5000 mm): Footprint LED26
-    @(90.0000 mm, 30.0000 mm): Footprint LED27
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(92.0096 mm, 37.5000 mm): Footprint LED26
-    @(97.5000 mm, 42.9904 mm): Footprint LED25
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(40.0000 mm, 30.0000 mm): Footprint LED9
-    @(37.9904 mm, 22.5000 mm): Footprint LED8
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(37.9904 mm, 22.5000 mm): Footprint LED8
-    @(32.5000 mm, 17.0096 mm): Footprint LED7
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(77.9904 mm, 37.5000 mm): Footprint LED22
-    @(80.0000 mm, 30.0000 mm): Footprint LED21
+    @(132.0096 mm, 22.5000 mm): Footprint LED40
+    @(130.0000 mm, 30.0000 mm): Footprint LED39
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
     @(132.0096 mm, 22.5000 mm): Footprint LED40
     @(137.5000 mm, 17.0096 mm): Footprint LED41
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(90.0000 mm, 30.0000 mm): Footprint LED27
-    @(92.0096 mm, 22.5000 mm): Footprint LED28
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(25.0000 mm, 45.0000 mm): Footprint LED12
-    @(17.5000 mm, 42.9904 mm): Footprint LED1
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(112.5000 mm, 17.0096 mm): Footprint LED31
-    @(117.9904 mm, 22.5000 mm): Footprint LED32
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; Severity: error
-    @(112.5000 mm, 17.0096 mm): Footprint LED31
-    @(105.0000 mm, 15.0000 mm): Footprint LED30
+    @(65.0000 mm, 45.0000 mm): Footprint LED24
+    @(72.5000 mm, 42.9904 mm): Footprint LED23
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
     @(80.0000 mm, 30.0000 mm): Footprint LED21
     @(77.9904 mm, 22.5000 mm): Footprint LED20
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(117.9904 mm, 22.5000 mm): Footprint LED32
-    @(120.0000 mm, 30.0000 mm): Footprint LED33
+    @(80.0000 mm, 30.0000 mm): Footprint LED21
+    @(77.9904 mm, 37.5000 mm): Footprint LED22
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(97.5000 mm, 17.0096 mm): Footprint LED29
+    @(40.0000 mm, 30.0000 mm): Footprint LED9
+    @(37.9904 mm, 22.5000 mm): Footprint LED8
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(32.5000 mm, 17.0096 mm): Footprint LED7
+    @(37.9904 mm, 22.5000 mm): Footprint LED8
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(112.5000 mm, 17.0096 mm): Footprint LED31
+    @(117.9904 mm, 22.5000 mm): Footprint LED32
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(112.5000 mm, 17.0096 mm): Footprint LED31
     @(105.0000 mm, 15.0000 mm): Footprint LED30
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(97.5000 mm, 17.0096 mm): Footprint LED29
-    @(92.0096 mm, 22.5000 mm): Footprint LED28
+    @(12.0096 mm, 22.5000 mm): Footprint LED4
+    @(10.0000 mm, 30.0000 mm): Footprint LED3
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(52.0096 mm, 22.5000 mm): Footprint LED16
-    @(50.0000 mm, 30.0000 mm): Footprint LED15
+    @(12.0096 mm, 22.5000 mm): Footprint LED4
+    @(17.5000 mm, 17.0096 mm): Footprint LED5
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(50.0000 mm, 30.0000 mm): Footprint LED15
-    @(52.0096 mm, 37.5000 mm): Footprint LED14
+    @(105.0000 mm, 45.0000 mm): Footprint LED36
+    @(112.5000 mm, 42.9904 mm): Footprint LED35
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(77.9904 mm, 22.5000 mm): Footprint LED20
-    @(72.5000 mm, 17.0096 mm): Footprint LED19
+    @(105.0000 mm, 45.0000 mm): Footprint LED36
+    @(97.5000 mm, 42.9904 mm): Footprint LED25
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(25.0000 mm, 45.0000 mm): Footprint LED12
+    @(32.5000 mm, 42.9904 mm): Footprint LED11
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(25.0000 mm, 45.0000 mm): Footprint LED12
+    @(17.5000 mm, 42.9904 mm): Footprint LED1
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
     @(145.0000 mm, 15.0000 mm): Footprint LED42
     @(137.5000 mm, 17.0096 mm): Footprint LED41
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; Severity: error
-    @(117.9904 mm, 37.5000 mm): Footprint LED34
-    @(120.0000 mm, 30.0000 mm): Footprint LED33
+    @(72.5000 mm, 42.9904 mm): Footprint LED23
+    @(77.9904 mm, 37.5000 mm): Footprint LED22
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(52.0096 mm, 22.5000 mm): Footprint LED16
+    @(57.5000 mm, 17.0096 mm): Footprint LED17
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(57.5000 mm, 17.0096 mm): Footprint LED17
+    @(65.0000 mm, 15.0000 mm): Footprint LED18
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(17.5000 mm, 42.9904 mm): Footprint LED1
+    @(12.0096 mm, 37.5000 mm): Footprint LED2
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(10.0000 mm, 30.0000 mm): Footprint LED3
+    @(12.0096 mm, 37.5000 mm): Footprint LED2
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; Severity: error
+    @(92.0096 mm, 37.5000 mm): Footprint LED26
+    @(97.5000 mm, 42.9904 mm): Footprint LED25
 
 ** Found 0 unconnected pads **
 

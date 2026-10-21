@@ -40,6 +40,8 @@ the button LEDs as pixels 48-51 of the LED chain.
 - `production/ahm-panel-gerbers.zip`: 2 layers, 1.6 mm, any colour.
 - Assembly, top side only: `production/ahm-panel-bom.csv` + `production/ahm-panel-cpl-top.csv`. Check the LCSC part
   numbers and the LED rotation in JLC's preview before paying (their rotations sometimes differ from KiCad's).
+- If JLC has no WS2812B 5050 in its assembly library, untick the LED row and solder the 52 LEDs yourself: the
+  white dot on the board marks pin 1 (the LED corner with the notch), which always faces the knob.
 - Solder yourself: 4 encoders, 4 tact switches, J1 and J2 (all through-hole, `production/hand-solder.csv`).
   Upload `production/ahm-panel-cpl-jlc.csv` as the CPL.
 

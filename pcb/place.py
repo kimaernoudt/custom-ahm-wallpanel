@@ -93,6 +93,13 @@ for k, cx in enumerate(KX):
         for g in m.GraphicalItems():           # the ring is too tight for the outline silk; it is hidden anyway
             if g.GetLayer() == pcbnew.F_SilkS:
                 g.SetLayer(pcbnew.F_Fab)
+        p1 = m.FindPadByNumber("1").GetPosition()   # pin-1 dot instead, just inside pad 1, for hand soldering
+        d = pcbnew.PCB_SHAPE(board)
+        d.SetShape(pcbnew.SHAPE_T_CIRCLE); d.SetLayer(pcbnew.F_SilkS); d.SetWidth(mm(0.3))
+        ux, uy = (cx - x) / LED_R, (KY - y) / LED_R  # towards the knob: pad 1 is on the inner side
+        px, py = p1.x + mm(1.15) * ux, p1.y + mm(1.15) * uy
+        d.SetCenter(pcbnew.VECTOR2I(int(px), int(py))); d.SetEnd(pcbnew.VECTOR2I(int(px + mm(0.25)), int(py)))
+        board.Add(d)
 for j, b in enumerate([3, 2, 1, 0]):          # EXTRA, DJ, IPAD, START
     n = 48 + j
     # same 5050 part as the rings (one part type, in stock); sits under the cap flange, clear of the switch pads
