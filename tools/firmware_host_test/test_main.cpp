@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   printf("--- press SAS (does nothing)\n"); push(2); run(100);
   printf("SAS ring LED0 colour %06X (expect not FF0000)\n", rings.px[2 * 12]);
   printf("TRAP ring lit LEDs: "); for (int i = 0; i < 12; i++) printf("%c", rings.px[12 + i] ? '#' : '.'); printf("\n");
-  printf("--- press DJ button\n"); ladder(1050); run(600);
+  printf("--- press DJ button\n"); ladder(PANEL_PCB ? 1580 : 1050); run(600);
   printf("button LEDs olat %04X (expect bit14 = DJ)\n", (unsigned)sim_olat);
   printf("--- turn INPUT +1\n"); turn(0, 1); run(200);
   printf("--- status\n%s", statusText().c_str());

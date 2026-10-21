@@ -57,19 +57,16 @@ LED51,WS2812B-B,LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm,,top
 LED52,WS2812B-B,LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm,,top
 SW1,"6x6 mm tact, 5 mm high",SW_PUSH_6mm_H5mm,,top
 SW2,"6x6 mm tact, 5 mm high",SW_PUSH_6mm_H5mm,,top
-R2,2.2k,R_0805_2012Metric,,top
+R2,3.3k,R_0805_2012Metric,,top
 SW3,"6x6 mm tact, 5 mm high",SW_PUSH_6mm_H5mm,,top
-R3,4.7k,R_0805_2012Metric,,top
+R3,8.2k,R_0805_2012Metric,,top
 SW4,"6x6 mm tact, 5 mm high",SW_PUSH_6mm_H5mm,,top
-R4,10k,R_0805_2012Metric,,top
-R1,10k,R_0805_2012Metric,,top
+R4,22k,R_0805_2012Metric,,top
 C1,100nF,C_0805_2012Metric,,top
 U1,MCP23017-E/SO,SOIC-28W_7.5x17.9mm_P1.27mm,C47023,top
 C2,100nF,C_0805_2012Metric,,top
 R5,10k,R_0805_2012Metric,,top
 J1,UEXT 2x5 box header,IDC-Header_2x05_P2.54mm_Vertical,,bottom
-R6,4.7k,R_0805_2012Metric,,top
-R7,4.7k,R_0805_2012Metric,,top
 J2,JST XH 2-pin,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,,bottom
 C3,22uF,C_1206_3216Metric,,top
 C4,22uF,C_1206_3216Metric,,top

@@ -107,7 +107,10 @@ for j, b in enumerate([3, 2, 1, 0]):          # EXTRA, DJ, IPAD, START
         pads={"1": "+5V", "2": (dnet(n + 1) if j < 3 else None), "3": "GND", "4": dnet(n)}, lcsc="")
 
 # ---------------- scene buttons + resistor ladder (one analog pin) ----------------
-LADDER_R = [None, "2.2k", "4.7k", "10k"]
+# The Olimex feeds UEXT pin 4 to GPIO36 through a Schottky diode (D4, anode on the ESP side) with its own 10k
+# pull-up (R37), so the pull-up lives on the Olimex and GPIO36 reads the ladder voltage plus the diode drop.
+# With 10k on top: 0 / 3.3k / 8.2k / 22k -> ~0.05-0.3, 0.86-1.04, 1.51-1.65, 2.28-2.36 V, idle 3.3 V.
+LADDER_R = [None, "3.3k", "8.2k", "22k"]
 for b, cx in enumerate(KX):
     sw_net = "LADDER" if b == 0 else f"LAD{b + 1}"
     add(f"SW{b + 1}", "6x6 mm tact, 5 mm high", "Button_Switch_THT", "SW_PUSH_6mm_H5mm", cx, BY, origin=(3.25, 2.25),
@@ -115,15 +118,14 @@ for b, cx in enumerate(KX):
     if b:
         add(f"R{b + 1}", LADDER_R[b], "Resistor_SMD", "R_0805_2012Metric", cx + 8, BY, rot=90,
             pads={"1": "LADDER", "2": sw_net})
-add("R1", "10k", "Resistor_SMD", "R_0805_2012Metric", 37, 66, rot=90, pads={"1": "+3V3", "2": "LADDER"})
 add("C1", "100nF", "Capacitor_SMD", "C_0805_2012Metric", 37, 71, rot=90, pads={"1": "LADDER", "2": "GND"})
 
 # ---------------- MCP23017 I/O expander ----------------
 U1 = {"9": "+3V3", "10": "GND", "12": "SCL", "13": "SDA", "15": "GND", "16": "GND", "17": "GND", "18": "RST",
       "21": "ENC1_A", "22": "ENC1_B", "23": "ENC2_A", "24": "ENC2_B", "25": "ENC3_A", "26": "ENC3_B", "27": "ENC1_SW",
       "1": "ENC4_A", "2": "ENC4_B", "3": "ENC2_SW", "4": "ENC3_SW", "5": "ENC4_SW"}
-add("U1", "MCP23017-E/SO", "Package_SO", "SOIC-28W_7.5x17.9mm_P1.27mm", 85, 79, rot=90, pads=U1, lcsc="C47023")
-add("C2", "100nF", "Capacitor_SMD", "C_0805_2012Metric", 72, 82, rot=0, pads={"1": "+3V3", "2": "GND"})
+add("U1", "MCP23017-E/SO", "Package_SO", "SOIC-28W_7.5x17.9mm_P1.27mm", 85, 77, rot=90, pads=U1, lcsc="C47023")
+add("C2", "100nF", "Capacitor_SMD", "C_0805_2012Metric", 87.5, 84.4, rot=0, pads={"1": "+3V3", "2": "GND"})  # under VDD/VSS
 add("R5", "10k", "Resistor_SMD", "R_0805_2012Metric", 98, 82, rot=0, pads={"1": "+3V3", "2": "RST"})
 
 # ---------------- connectors (on the back) ----------------
@@ -132,8 +134,7 @@ j1 = add("J1", "UEXT 2x5 box header", "Connector_IDC", "IDC-Header_2x05_P2.54mm_
          back=True, origin=(1.27, 5.08),
          pads={"1": "+3V3", "2": "GND", "3": "LED_3V3", "4": "LADDER", "5": "SCL", "6": "SDA"})
 j1.FindPadByNumber("2").SetZoneConnection(pcbnew.ZONE_CONNECTION_FULL)   # tracks leave room for only 1 thermal spoke
-add("R6", "4.7k", "Resistor_SMD", "R_0805_2012Metric", 58, 77, rot=90, pads={"1": "+3V3", "2": "SDA"})
-add("R7", "4.7k", "Resistor_SMD", "R_0805_2012Metric", 58, 82, rot=90, pads={"1": "+3V3", "2": "SCL"})
+# no I2C pull-ups here: the Olimex already has 2.2k on SCL and SDA (R31, R35)
 # J2 = 5 V from the Olimex for the LEDs
 add("J2", "JST XH 2-pin", "Connector_JST", "JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical", 125, 80, back=True,
     origin=(1.25, 0), pads={"1": "+5V", "2": "GND"})

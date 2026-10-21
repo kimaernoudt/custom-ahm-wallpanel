@@ -142,6 +142,9 @@ uint8_t takePushes() {
 
 // ---- LED rings (+ button LEDs on the PCB: pixels 48..51 = EXTRA, DJ, IPAD, START) ----
 const int NUM_PIXELS = 4 * LEDS_PER_RING + (PANEL_PCB ? 4 : 0);
+// The Olimex 5 V rail gives 2 A. All 48 ring LEDs fully lit at 255 draw ~1.4 A plus the ESP32 and button LEDs,
+// so brightness is capped at 160 (~0.9 A worst case).
+const uint8_t MAX_BRIGHTNESS = 160;
 Adafruit_NeoPixel rings(NUM_PIXELS, PIN_LEDS, NEO_GRB + NEO_KHZ800);
 
 void setButtonLeds(uint8_t mask) {   // bit per button; on the PCB this only fills the pixel buffer, show() sends it
@@ -156,15 +159,24 @@ void setButtonLeds(uint8_t mask) {   // bit per button; on the PCB this only fil
   ledWanted = v;
 }
 
-// Scene buttons on one analog pin: 0 V, 0.59 V, 1.05 V, 1.65 V, idle 3.3 V.
-// Returns the button (0..3) on a new press, -1 otherwise. Call every few ms.
+// Scene buttons on one analog pin. Returns the button (0..3) on a new press, -1 otherwise. Call every few ms.
+// Hand-wired: 10k pull-up, 0 / 2.2k / 4.7k / 10k -> 0, 0.59, 1.05, 1.65 V, idle 3.3 V.
+// PCB: the Olimex's own 10k pull-up and Schottky diode on UEXT pin 4, 0 / 3.3k / 8.2k / 22k
+//      -> about 0.05-0.3, 0.86-1.04, 1.51-1.65, 2.28-2.36 V (diode drop included), idle 3.3 V.
+#if PANEL_PCB
+const uint16_t LADDER_MV[4] = {550, 1250, 1950, 2800};
+#else
+const uint16_t LADDER_MV[4] = {300, 820, 1350, 2400};
+#endif
 int pollLadder() {
   static int last = -1, stable = -1, same = 0;
   static uint32_t lastRead = 0;
   if (millis() - lastRead < 5) return -1;
   lastRead = millis();
   uint32_t mv = analogReadMilliVolts(PIN_LADDER);
-  int b = mv < 300 ? 0 : mv < 820 ? 1 : mv < 1350 ? 2 : mv < 2400 ? 3 : -1;
+  int b = -1;
+  for (int i = 3; i >= 0; i--)
+    if (mv < LADDER_MV[i]) b = i;
   if (b != last) { last = b; same = 0; return -1; }
   if (++same < 4 || b == stable) return -1;   // 4 equal readings = 20 ms
   stable = b;
@@ -173,7 +185,7 @@ int pollLadder() {
 
 void ringsBegin(uint8_t brightness) {
   rings.begin();
-  rings.setBrightness(brightness);
+  rings.setBrightness(brightness < MAX_BRIGHTNESS ? brightness : MAX_BRIGHTNESS);   // older saved settings may be higher
   rings.clear();
   rings.show();
 }

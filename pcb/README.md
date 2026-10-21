@@ -25,12 +25,12 @@ MCP23017 sit on it. One 10-wire UEXT cable and one 2-wire 5 V cable go to the Ol
 | 1 | 3.3 V | MCP23017, pull-ups |
 | 2 | GND | |
 | 3 | GPIO4 | LED data (shifted to 5 V on the board) |
-| 4 | GPIO36 | scene buttons (resistor ladder, 10k pull-up on the board) |
-| 5 | GPIO16 | I2C SCL |
+| 4 | GPIO36 | scene buttons (resistor ladder 0 / 3.3k / 8.2k / 22k; the pull-up is the Olimex's own 10k behind its diode D4) |
+| 5 | GPIO16 | I2C SCL (pull-ups 2.2k on the Olimex) |
 | 6 | GPIO13 | I2C SDA |
 
-J2 (JST XH, back): 5 V and GND for the LEDs, from the Olimex 5 V pin. Check the UEXT pin-out against the Olimex
-ESP32-POE schematic before ordering.
+J2 (JST XH, back): 5 V and GND for the LEDs, from the Olimex 5 V pin. The UEXT pin-out was checked against the Olimex
+ESP32-POE Rev L schematic.
 
 Firmware: build with `PANEL_PCB 1` (top of `firmware/ahm_panel/panel_io.h`). That moves the ladder to GPIO36 and drives
 the button LEDs as pixels 48-51 of the LED chain.

@@ -48,7 +48,7 @@ struct Settings {
   KnobCfg knob[4];
   ButtonCfg button[4];
   uint8_t step;        // level change per encoder click
-  uint8_t brightness;  // LED rings, 5..255
+  uint8_t brightness;  // LED rings, 5..MAX_BRIGHTNESS
   uint8_t ringOffset;  // LED number at the "minimum" position, 0..11
   bool ringReverse;    // rings fill anticlockwise
 };

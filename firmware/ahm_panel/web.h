@@ -74,7 +74,8 @@ void handleRoot() {
   }
   h += F("</fieldset><fieldset><legend>Feel and LEDs</legend>");
   h += field("Level steps per click", "step", String(cfg.step), "type=number min=1 max=10");
-  h += field("Ring brightness (5-255)", "br", String(cfg.brightness), "type=number min=5 max=255");
+  h += field(("Ring brightness (5-" + String(MAX_BRIGHTNESS) + ")").c_str(), "br", String(cfg.brightness),
+             ("type=number min=5 max=" + String(MAX_BRIGHTNESS)).c_str());
   h += field("Ring start LED (0-11)", "ro", String(cfg.ringOffset), "type=number min=0 max=11");
   h += "<label><input type=checkbox name=rr " + String(cfg.ringReverse ? "checked" : "") + "> Rings fill anticlockwise</label>";
   h += F("</fieldset><button>Save and restart</button></form>"
@@ -119,7 +120,7 @@ void handleSave() {
     cfg.button[b].input = numArg("bi" + i, 0, 64, cfg.button[b].input);
   }
   cfg.step = numArg("step", 1, 10, cfg.step);
-  cfg.brightness = numArg("br", 5, 255, cfg.brightness);
+  cfg.brightness = numArg("br", 5, MAX_BRIGHTNESS, cfg.brightness);
   cfg.ringOffset = numArg("ro", 0, 11, cfg.ringOffset);
   cfg.ringReverse = web.hasArg("rr");
   saveSettings();
