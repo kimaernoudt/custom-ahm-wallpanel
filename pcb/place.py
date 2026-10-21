@@ -89,7 +89,7 @@ for k, cx in enumerate(KX):
         x, y = cx + LED_R * math.sin(t), KY - LED_R * math.cos(t)
         n = k * 12 + i
         m = add(f"LED{n + 1}", "WS2812B-B", "LED_SMD", "LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm", x, y,
-                rot=(180 - th) % 360, pads={"1": "+5V", "2": dnet(n + 1), "3": "GND", "4": dnet(n)}, lcsc="C114586")
+                rot=(180 - th) % 360, pads={"1": "+5V", "2": dnet(n + 1), "3": "GND", "4": dnet(n)}, lcsc="")
         for g in m.GraphicalItems():           # the ring is too tight for the outline silk; it is hidden anyway
             if g.GetLayer() == pcbnew.F_SilkS:
                 g.SetLayer(pcbnew.F_Fab)
@@ -104,7 +104,7 @@ for j, b in enumerate([3, 2, 1, 0]):          # EXTRA, DJ, IPAD, START
     n = 48 + j
     # same 5050 part as the rings (one part type, in stock); sits under the cap flange, clear of the switch pads
     add(f"LED{n + 1}", "WS2812B-B", "LED_SMD", "LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm", KX[b], BY - 6.5,
-        pads={"1": "+5V", "2": (dnet(n + 1) if j < 3 else None), "3": "GND", "4": dnet(n)}, lcsc="C114586")
+        pads={"1": "+5V", "2": (dnet(n + 1) if j < 3 else None), "3": "GND", "4": dnet(n)}, lcsc="")
 
 # ---------------- scene buttons + resistor ladder (one analog pin) ----------------
 LADDER_R = [None, "2.2k", "4.7k", "10k"]
