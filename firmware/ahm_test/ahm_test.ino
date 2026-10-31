@@ -1,5 +1,6 @@
 // AHM test: one encoder + one button on an Olimex ESP32-POE
-// - Encoder turns TRAP (control group 1) up/down, 1 step per click
+// - Encoder turns TRAP (control group 1) up/down; it sends absolute levels, because the
+//   offline System Manager ignores the increment/decrement message
 // - Button recalls scene 1 (CAFE START)
 // - Everything the AHM sends back is printed as hex in the Serial Monitor (115200)
 //
@@ -21,10 +22,12 @@ const uint8_t TEST_N  = 2;    // 0 = input, 1 = zone, 2 = control group
 const uint8_t TEST_CH = 0;    // 0 = number 1 (TRAP is control group 1)
 const uint8_t TEST_SCENE = 1; // scene recalled by the button
 const int STEPS_PER_CLICK = 4;  // most EC11s; try 2 if it needs two clicks per step
+const int LEVEL_STEP = 2;       // level units per click (0..127 scale)
 // ------------------------------
 
 WiFiClient ahm;
 bool ethUp = false;
+int level = -1;   // TEST channel level as last read from the AHM, -1 = not known yet
 
 void onEvent(arduino_event_id_t event) {
   switch (event) {
@@ -54,12 +57,43 @@ void sendBytes(const uint8_t *b, size_t n, const char *what) {
   Serial.println();
 }
 
-// NRPN 20 = increment/decrement level by one step
+// NRPN 17 = absolute level 0..127
 void levelStep(bool up) {
+  if (level < 0) {
+    Serial.println("Level not read from the AHM yet, skipped");
+    return;
+  }
+  level = constrain(level + (up ? LEVEL_STEP : -LEVEL_STEP), 0, 127);
   uint8_t b[] = {(uint8_t)(0xB0 | TEST_N), 0x63, TEST_CH,
-                 (uint8_t)(0xB0 | TEST_N), 0x62, 0x20,
-                 (uint8_t)(0xB0 | TEST_N), 0x06, (uint8_t)(up ? 0x7F : 0x3F)};
+                 (uint8_t)(0xB0 | TEST_N), 0x62, 0x17,
+                 (uint8_t)(0xB0 | TEST_N), 0x06, (uint8_t)level};
   sendBytes(b, sizeof(b), up ? "level up" : "level down");
+}
+
+// ask the AHM for the TEST channel level; it answers with a level message
+void getLevel() {
+  uint8_t b[] = {0xF0, 0x00, 0x00, 0x1A, 0x50, 0x12, 0x01, 0x00, TEST_N, 0x01, 0x0B, 0x17, TEST_CH, 0xF7};
+  sendBytes(b, sizeof(b), "get level");
+}
+
+// watch the bytes from the AHM for the TEST channel level, sent either as
+// NRPN  BN 63 CH BN 62 17 BN 06 LV   or as SysEx  F0 00 00 1A 50 12 01 00 0N 01 0B CH LV F7
+void watchLevel(uint8_t c) {
+  static uint8_t last[14];
+  memmove(last, last + 1, 13);
+  last[13] = c;
+  const uint8_t bn = 0xB0 | TEST_N, *k = last + 5;   // k = the last 9 bytes
+  int lv = -1;
+  if (k[0] == bn && k[1] == 0x63 && k[2] == TEST_CH && k[4] == 0x62 && k[5] == 0x17 && k[7] == 0x06 && c < 0x80)
+    lv = c;
+  static const uint8_t hdr[] = {0xF0, 0x00, 0x00, 0x1A, 0x50, 0x12};
+  if (c == 0xF7 && !memcmp(last, hdr, 6) && last[8] == TEST_N && last[9] == 0x01 && last[10] == 0x0B &&
+      last[11] == TEST_CH)
+    lv = last[12];
+  if (lv >= 0) {
+    level = lv;
+    Serial.printf("   TEST level is now %d\n", level);
+  }
 }
 
 // Bank select + program change; scenes 1..128
@@ -76,7 +110,9 @@ void ensureConnected() {
   Serial.print(AHM_IP);
   Serial.print(":");
   Serial.print(AHM_PORT);
-  Serial.println(ahm.connect(AHM_IP, AHM_PORT) ? " ... OK" : " ... failed");
+  bool ok = ahm.connect(AHM_IP, AHM_PORT);
+  Serial.println(ok ? " ... OK" : " ... failed");
+  if (ok) getLevel();
 }
 
 // quadrature decoding by polling
@@ -120,7 +156,11 @@ void loop() {
   // print whatever the AHM sends back
   if (ahm.connected() && ahm.available()) {
     Serial.print("<- AHM:");
-    while (ahm.available()) Serial.printf(" %02X", ahm.read());
+    uint8_t buf[64];
+    int n = 0;
+    while (ahm.available() && n < (int)sizeof(buf)) buf[n++] = ahm.read();
+    for (int i = 0; i < n; i++) Serial.printf(" %02X", buf[i]);
     Serial.println();
+    for (int i = 0; i < n; i++) watchLevel(buf[i]);
   }
 }
