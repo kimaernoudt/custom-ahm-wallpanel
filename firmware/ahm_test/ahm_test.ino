@@ -25,7 +25,7 @@ const int STEPS_PER_CLICK = 4;  // most EC11s; try 2 if it needs two clicks per 
 const int LEVEL_STEP = 2;       // level units per click (0..127 scale)
 // ------------------------------
 
-WiFiClient ahm;
+NetworkClient ahm;
 bool ethUp = false;
 int level = -1;   // TEST channel level as last read from the AHM, -1 = not known yet
 
