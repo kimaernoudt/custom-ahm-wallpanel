@@ -11,7 +11,7 @@
 #include <ETH.h>
 
 // ---------- settings ----------
-IPAddress AHM_IP(192, 168, 1, 100);   // <-- put your AHM's IP address here
+IPAddress AHM_IP(192, 168, 100, 91);   // <-- put your AHM's IP address here
 const uint16_t AHM_PORT = 51325;
 
 const int PIN_ENC_A = 32;
@@ -76,20 +76,32 @@ void getLevel() {
   sendBytes(b, sizeof(b), "get level");
 }
 
-// watch the bytes from the AHM for the TEST channel level, sent either as
-// NRPN  BN 63 CH BN 62 17 BN 06 LV   or as SysEx  F0 00 00 1A 50 12 01 00 0N 01 0B CH LV F7
+// watch the bytes from the AHM for the TEST channel level. The AHM uses MIDI running status,
+// so a level arrives as  BN 63 CH 62 17 06 LV  (the BN may be repeated), or as SysEx
+// F0 00 00 1A 50 12 01 00 0N 01 0B CH LV F7
 void watchLevel(uint8_t c) {
-  static uint8_t last[14];
-  memmove(last, last + 1, 13);
-  last[13] = c;
-  const uint8_t bn = 0xB0 | TEST_N, *k = last + 5;   // k = the last 9 bytes
+  static uint8_t status = 0, data[2], nData = 0, nrpnCh = 0xFF, nrpnParam = 0;
+  static uint8_t sysex[16], nSysex = 0;
+  static bool inSysex = false;
   int lv = -1;
-  if (k[0] == bn && k[1] == 0x63 && k[2] == TEST_CH && k[4] == 0x62 && k[5] == 0x17 && k[7] == 0x06 && c < 0x80)
-    lv = c;
-  static const uint8_t hdr[] = {0xF0, 0x00, 0x00, 0x1A, 0x50, 0x12};
-  if (c == 0xF7 && !memcmp(last, hdr, 6) && last[8] == TEST_N && last[9] == 0x01 && last[10] == 0x0B &&
-      last[11] == TEST_CH)
-    lv = last[12];
+  if (c == 0xF0) { inSysex = true; nSysex = 0; return; }
+  if (inSysex) {
+    if (c != 0xF7) { if (nSysex < sizeof(sysex)) sysex[nSysex++] = c; return; }
+    inSysex = false;
+    if (nSysex >= 12 && sysex[3] == 0x50 && sysex[4] == 0x12 && sysex[7] == TEST_N && sysex[9] == 0x0B &&
+        sysex[10] == TEST_CH)
+      lv = sysex[11];
+  } else if (c & 0x80) {
+    status = c; nData = 0;
+  } else if (status == (0xB0 | TEST_N)) {
+    data[nData++] = c;
+    if (nData == 2) {
+      nData = 0;
+      if (data[0] == 0x63) nrpnCh = data[1];
+      else if (data[0] == 0x62) nrpnParam = data[1];
+      else if (data[0] == 0x06 && nrpnCh == TEST_CH && nrpnParam == 0x17) lv = data[1];
+    }
+  }
   if (lv >= 0) {
     level = lv;
     Serial.printf("   TEST level is now %d\n", level);
@@ -135,6 +147,8 @@ void setup() {
   pinMode(PIN_BTN, INPUT_PULLUP);
   Network.onEvent(onEvent);   // on esp32 core 2.x use: WiFi.onEvent(onEvent);
   ETH.begin();                // board "OLIMEX ESP32-PoE" supplies the PHY settings
+  // fixed address on the AHM network (it has no DHCP server); remove this line to use DHCP
+  ETH.config(IPAddress(192, 168, 100, 200), IPAddress(192, 168, 100, 1), IPAddress(255, 255, 255, 0));
   Serial.println("AHM test starting");
 }
 
