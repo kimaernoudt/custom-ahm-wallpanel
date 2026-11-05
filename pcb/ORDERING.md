@@ -28,7 +28,9 @@ Next screens:
    - **LEDs**: the corner notch / pin-1 mark of every LED sits on the white dot printed on the board (the dot always faces
      the knob). If all 52 are off by the same angle, rotate one and apply to all; that only means JLC's footprint is
      drawn differently from KiCad's.
-   - **Encoders**: the 3 signal pins left of the shaft, the 2 switch pins right of it, shaft in the
+   - **Encoders**: open the datasheet link on the C361165 line and check the shaft is 20 mm (it is in the same
+     ALPS EC11E family as the 20 mm parts, but JLC's page does not list the length).
+     In the preview: the 3 signal pins left of the shaft, the 2 switch pins right of it, shaft in the
      middle of the LED ring.
    - **Tact switches**: the 4 legs land on the 4 round pads under each button cap.
 4. Shipping: **DHL Express** (fastest to Belgium, 2-4 days). VAT is charged at checkout under IOSS (order under €150),
@@ -45,7 +47,7 @@ Parts JLC fits (per board):
 | Ref | Part | LCSC | Alternative if out of stock |
 |---|---|---|---|
 | LED1-52 | Worldsemi WS2812B-B/W, 5050 | C114586 | C2761795 (WS2812B-B/T, same LED) |
-| ENC1-4 | ALPS EC11E18244A5: 36 detents, push switch, 20 mm flat shaft, M7 bushing | C255515 | C202365 (EC11E18244AU) |
+| ENC1-4 | ALPS EC11E1834403: **smooth, no clicks**, 18 pulses, push switch, flat shaft, M7 bushing | C361165 | none smooth; C255515 (EC11E18244A5) is the same encoder with clicks |
 | SW1-4 | SHOU HAN TS665CJ, 6x6 mm tact, 5 mm high, through-hole | C393938 | C2837515 (Kinghelm KH-6X6X5H-TJ) |
 | U1 | MCP23017-E/SO | C47023 | |
 | U2 | 74AHCT1G125 | C7484 | |
@@ -72,6 +74,6 @@ screws, heat-set inserts and wall screws from [PARTS-LIST.md](../PARTS-LIST.md).
 
 1. Solder J1 (notch of the shroud as printed on the silkscreen) and J2 on the back.
 2. Flash `firmware/ahm_panel` with `#define PANEL_PCB 1` at the top of `panel_io.h`. That also sets the encoder
-   decoding for these 36-detent encoders (one step per click).
+   decoding: 36 steps per turn.
 3. Connect UEXT and the 5 V lead to the Olimex (pin-out in [README.md](README.md)), plug in PoE, open the panel's web
    page and set the AHM IP address.

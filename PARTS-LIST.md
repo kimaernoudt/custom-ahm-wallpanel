@@ -7,7 +7,7 @@ Prices are approximate (AliExpress, Amazon, Olimex shop, October 2026). The sear
 | Qty | Part | Spec / search term | Approx. |
 |---|---|---|---|
 | 1 | Controller | Olimex ESP32-POE (already owned) or ESP32-POE-ISO | €0 (€22 new) |
-| 4 | Rotary encoder with push switch | "EC11 rotary encoder 20mm D shaft", 20 detents, M7 bushing + nut (the panel PCB uses ALPS EC11E18244A5, fitted by JLCPCB: see pcb/ORDERING.md) | €5 |
+| 4 | Rotary encoder with push switch | "EC11 rotary encoder 20mm D shaft", 20 detents, M7 bushing + nut (the panel PCB uses the smooth ALPS EC11E1834403, fitted by JLCPCB: see pcb/ORDERING.md) | €5 |
 | 4 | Knob | "aluminium knob 6mm D shaft 20mm", black | €8 |
 | 4 | LED ring | "WS2812B 12 bit ring 37mm" (12 LEDs, 37 mm OD, 23 mm ID) | €8 |
 | 4 | Push button | "12mm momentary push button LED", panel mount, normally open, 5 V LED if lit | €8 |

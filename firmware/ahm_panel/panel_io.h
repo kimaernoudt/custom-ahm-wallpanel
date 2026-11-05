@@ -11,8 +11,9 @@
 #define PANEL_PCB 0
 #endif
 
-// Detents per full quadrature cycle: 1 for the common 20-detent/20-pulse EC11 (hand-wired build),
-// 2 for the ALPS EC11E18244A5 on the panel PCB (36 detents/18 pulses: it rests at both 00 and 11).
+// Steps per full quadrature cycle: 1 for the common 20-detent/20-pulse EC11 (hand-wired build),
+// 2 for the panel PCB's ALPS EC11E1834403 (smooth, 18 pulses: 36 steps per turn; also right for the
+// 36-detent EC11E18244A5, which rests at both 00 and 11).
 #ifndef ENC_DETENTS_PER_CYCLE
 #define ENC_DETENTS_PER_CYCLE (PANEL_PCB ? 2 : 1)
 #endif
