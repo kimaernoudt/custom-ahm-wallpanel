@@ -46,7 +46,7 @@ Parts JLC fits (per board):
 
 | Ref | Part | LCSC | Alternative if out of stock |
 |---|---|---|---|
-| LED1-52 | Worldsemi WS2812B-B/W, 5050 | C114586 | C2761795 (WS2812B-B/T, same LED) |
+| LED1-52 | Worldsemi WS2812B-V5/W, 5050 | C2874885 (often short: use Pre-order for the rest) | none in stock Nov 2026; C114586 left JLC assembly |
 | ENC1-4 | ALPS EC11E1834403: **smooth, no clicks**, 18 pulses, push switch, flat shaft, M7 bushing | C361165 | none smooth; C255515 (EC11E18244A5) is the same encoder with clicks |
 | SW1-4 | SHOU HAN TS665CJ, 6x6 mm tact, 5 mm high, through-hole | C393938 | C2837515 (Kinghelm KH-6X6X5H-TJ) |
 | U1 | MCP23017-E/SO | C47023 | |

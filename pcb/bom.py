@@ -13,7 +13,7 @@ LCSC = {("R_0805_2012Metric", "10k"): "C17414", ("R_0805_2012Metric", "4.7k"): "
         ("C_0805_2012Metric", "100nF"): "C49678", ("C_0805_2012Metric", "10uF"): "C15850",
         ("C_1206_3216Metric", "22uF"): "C12891",
         # fitted by JLCPCB too (Kim wants the LEDs and encoders on the board when it arrives)
-        ("LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm", "WS2812B-B"): "C114586",                    # Worldsemi WS2812B-B/W
+        ("LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm", "WS2812B-B"): "C2874885",                   # Worldsemi WS2812B-V5/W (C114586 left JLC assembly, Nov 2026)
         ("RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm", "EC11E with switch, 20 mm shaft"): "C361165",  # ALPS EC11E1834403, smooth (no detents)
         ("SW_PUSH_6mm_H5mm", "6x6 mm tact, 5 mm high"): "C393938"}                        # SHOU HAN TS665CJ, 6x6x5 THT
 
