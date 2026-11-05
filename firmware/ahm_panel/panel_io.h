@@ -11,6 +11,11 @@
 #define PANEL_PCB 0
 #endif
 
+// Detents per full quadrature cycle: 1 for the common 20-detent/20-pulse EC11 (hand-wired build),
+// 2 for the ALPS EC11E18244A5 on the panel PCB (36 detents/18 pulses: it rests at both 00 and 11).
+#ifndef ENC_DETENTS_PER_CYCLE
+#define ENC_DETENTS_PER_CYCLE (PANEL_PCB ? 2 : 1)
+#endif
 const int PIN_SDA = 13, PIN_SCL = 16, PIN_LEDS = 4, PIN_LADDER = PANEL_PCB ? 36 : 33;
 const uint8_t MCP_ADDR = 0x20;
 const int LEDS_PER_RING = 12;
@@ -87,7 +92,7 @@ void ioTask(void *) {
       if (now != state[k]) {
         count[k] += STEPS[(state[k] << 2) | now];
         state[k] = now;
-        if (now == 3) {   // EC11 detent: A and B both high
+        if (now == 3 || (ENC_DETENTS_PER_CYCLE == 2 && now == 0)) {   // detent position
           int8_t d = count[k] >= 2 ? 1 : count[k] <= -2 ? -1 : 0;
           count[k] = 0;
           if (d) {
