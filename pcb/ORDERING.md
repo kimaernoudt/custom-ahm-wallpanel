@@ -22,7 +22,9 @@ Upload `production/ahm-panel-gerbers.zip`, then:
 
 Next screens:
 1. BOM: `production/ahm-panel-bom.csv`. CPL: `production/ahm-panel-cpl-jlc.csv`.
-2. Parts list: all 13 lines must be matched and in stock. J1 and J2 are not in the BOM, so JLC flags them as "not
+2. Parts list: all 13 lines must be matched and in stock. In Nov 2026 the LEDs were short: pre-order C2874885
+   (110 pcs, part page https://jlcpcb.com/partdetail/C2874885), wait for JLC's email that they arrived, then pick it
+   from **My Inventory** on the LED row. J1 and J2 are not in the BOM, so JLC flags them as "not
    placed"; that is expected. If a part is out of stock, the alternatives are below.
 3. Placement preview, check these three things before paying:
    - **LEDs**: the corner notch / pin-1 mark of every LED sits on the white dot printed on the board (the dot always faces
@@ -33,6 +35,9 @@ Next screens:
      In the preview: the 3 signal pins left of the shaft, the 2 switch pins right of it, shaft in the
      middle of the LED ring.
    - **Tact switches**: the 4 legs land on the 4 round pads under each button cap.
+   - **U1 (MCP23017) and U2 (74AHCT1G125)**: in the Nov 2026 order both came in wrong (U1 turned 90°, U2 180°).
+     Select each, rotate until the legs sit on the pads and JLC's pink pin-1 dot is next to the white triangle on the
+     board (U2: 3 legs on the triangle side). JLC saves the correction with the order.
 4. Shipping: **DHL Express** (fastest to Belgium, 2-4 days). VAT is charged at checkout under IOSS (order under €150),
    so DHL asks nothing extra at the door. Then pay.
 
