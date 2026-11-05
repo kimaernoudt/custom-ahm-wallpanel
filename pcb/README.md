@@ -37,13 +37,14 @@ the button LEDs as pixels 48-51 of the LED chain.
 
 ## Ordering (JLCPCB)
 
+Step-by-step order checklist and the parts to buy separately: [ORDERING.md](ORDERING.md).
+
 - `production/ahm-panel-gerbers.zip`: 2 layers, 1.6 mm, any colour.
-- Assembly, top side only: `production/ahm-panel-bom.csv` + `production/ahm-panel-cpl-top.csv`. Check the LCSC part
-  numbers and the LED rotation in JLC's preview before paying (their rotations sometimes differ from KiCad's).
-- The 52 WS2812B 5050 LEDs are soldered by hand too (JLC had none in its assembly library, Oct 2026): the white dot
-  on the board marks pin 1 (the LED corner with the notch), which always faces the knob.
-- Solder yourself: 4 encoders, 4 tact switches, J1 and J2 (all through-hole, `production/hand-solder.csv`).
-  Upload `production/ahm-panel-cpl-jlc.csv` as the CPL.
+- Assembly, top side, Standard PCBA: `production/ahm-panel-bom.csv` + `production/ahm-panel-cpl-jlc.csv`.
+  JLCPCB fits everything on the front: the SMD parts, all 52 WS2812B-V5 LEDs (C2874885), the 4 smooth (no-click) ALPS EC11E1834403
+  encoders (C361165) and the 4 tact switches (C393938). The last two are through-hole, so JLC hand-solders them.
+- `ahm-panel-cpl-jlc.csv` gives the encoders and switches at their body centre (KiCad places them by pin 1).
+- Solder yourself: J1 and J2 on the back (`production/hand-solder.csv`).
 
 ## Rebuild
 
