@@ -55,13 +55,11 @@ Parts JLC fits (per board):
 
 ## 2. Buy separately
 
-For 2 panels. Buy from EU shops (Olimex ships from Bulgaria in 2-4 days; the rest from Reichelt, Conrad.be or
-Amazon.be, next-day to a few days) rather than AliExpress (2-4 weeks); all of it arrives before the boards do.
+For 2 panels (you already have the 2 Olimex ESP32-POE boards and the UEXT cables). Buy from EU shops (Reichelt,
+Conrad.be or Amazon.be, next-day to a few days) rather than AliExpress (2-4 weeks); all of it arrives before the boards do.
 
 | Qty | Part | Where / search term | Approx. |
 |---|---|---|---|
-| 1 | Olimex ESP32-POE (you have one, this is the 2nd) | https://www.olimex.com/Products/IoT/ESP32/ESP32-POE/ | €25 |
-| 2 | UEXT cable, 10-pin IDC, 15 cm (board J1 to Olimex UEXT) | https://www.olimex.com/Products/Components/Cables/ "CABLE-IDC10-15cm" | €2 |
 | 2 | 2x5 pin 2.54 mm shrouded box header, straight, through-hole (J1) | Reichelt "WSL 10G" or "2x5 IDC box header 2.54 straight" | €1 |
 | 2 | JST XH 2-pin socket, straight, through-hole (J2), with a pre-crimped XH 2-pin lead to female Dupont | "JST XH 2.54 2 pin kit pre-crimped" (any XH kit has both) | €4 |
 | 8 | Knob for 6 mm flat (D) shaft, about 20 mm diameter | "aluminium knob 6mm D shaft 20mm black" | €12 |
