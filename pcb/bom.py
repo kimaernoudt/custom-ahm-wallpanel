@@ -19,6 +19,8 @@ LCSC = {("R_0805_2012Metric", "10k"): "C17414", ("R_0805_2012Metric", "4.7k"): "
 
 # KiCad puts these THT footprints' origin on pin 1; JLCPCB wants the body centre (offset in footprint coordinates).
 CENTRE = {"ENC": (7.5, 2.5), "SW": (3.25, 2.25)}
+# JLC's footprints are drawn rotated against KiCad's for these (seen in JLC's placement preview, Nov 2026)
+ROT_FIX = {"U1": -90, "U2": 180}   # MCP23017 SOIC-28W, 74AHCT1G125 SOT-23-5
 groups = defaultdict(list)
 for r in csv.DictReader(open("parts.csv")):
     lcsc = r["lcsc"] or LCSC.get((r["footprint"], r["value"]), "")
@@ -43,4 +45,5 @@ with open("production/ahm-panel-cpl-top.csv") as src, open("production/ahm-panel
         a = math.radians(rot)   # pos file is Y-up, footprint offsets are Y-down
         x += dx * math.cos(a) + dy * math.sin(a)
         y += dx * math.sin(a) - dy * math.cos(a)
-        w.writerow([r["Ref"], f"{x:.4f}mm", f"{y:.4f}mm", "Top", r["Rot"]])
+        rot = (rot + ROT_FIX.get(r["Ref"], 0)) % 360
+        w.writerow([r["Ref"], f"{x:.4f}mm", f"{y:.4f}mm", "Top", f"{rot:.6f}"])

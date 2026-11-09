@@ -28,16 +28,16 @@ Next screens:
    placed"; that is expected. If a part is out of stock, the alternatives are below.
 3. Placement preview, check these three things before paying:
    - **LEDs**: the corner notch / pin-1 mark of every LED sits on the white dot printed on the board (the dot always faces
-     the knob). If all 52 are off by the same angle, rotate one and apply to all; that only means JLC's footprint is
+     the knob). If all 53 are off by the same angle, rotate one and apply to all; that only means JLC's footprint is
      drawn differently from KiCad's.
    - **Encoders**: open the datasheet link on the C361165 line and check the shaft is 20 mm (it is in the same
      ALPS EC11E family as the 20 mm parts, but JLC's page does not list the length).
      In the preview: the 3 signal pins left of the shaft, the 2 switch pins right of it, shaft in the
      middle of the LED ring.
    - **Tact switches**: the 4 legs land on the 4 round pads under each button cap.
-   - **U1 (MCP23017) and U2 (74AHCT1G125)**: in the Nov 2026 order both came in wrong (U1 turned 90°, U2 180°).
-     Select each, rotate until the legs sit on the pads and JLC's pink pin-1 dot is next to the white triangle on the
-     board (U2: 3 legs on the triangle side). JLC saves the correction with the order.
+   - **U1 (MCP23017) and U2 (74AHCT1G125)**: JLC's footprints are turned against KiCad's, so `bom.py` now corrects
+     them in the CPL (U1 -90°, U2 +180°, as found in the Nov 2026 preview). Still check: legs on the pads and JLC's pink
+     pin-1 dot next to the white triangle on the board (U2: 3 legs on the triangle side).
 4. Shipping: **DHL Express** (fastest to Belgium, 2-4 days). VAT is charged at checkout under IOSS (order under €150),
    so DHL asks nothing extra at the door. Then pay.
 
@@ -51,9 +51,9 @@ Parts JLC fits (per board):
 
 | Ref | Part | LCSC | Alternative if out of stock |
 |---|---|---|---|
-| LED1-52 | Worldsemi WS2812B-V5/W, 5050 | C2874885 (often short: use Pre-order for the rest) | none in stock Nov 2026; C114586 left JLC assembly |
+| LED1-53 | Worldsemi WS2812B-V5/W, 5050 | C2874885 (often short: use Pre-order for the rest) | none in stock Nov 2026; C114586 left JLC assembly |
 | ENC1-4 | ALPS EC11E1834403: **smooth, no clicks**, 18 pulses, push switch, flat shaft, M7 bushing | C361165 | none smooth; C255515 (EC11E18244A5) is the same encoder with clicks |
-| SW1-4 | SHOU HAN TS665CJ, 6x6 mm tact, 5 mm high, through-hole | C393938 | C2837515 (Kinghelm KH-6X6X5H-TJ) |
+| SW1-5 | SHOU HAN TS665CJ, 6x6 mm tact, 5 mm high, through-hole | C393938 | C2837515 (Kinghelm KH-6X6X5H-TJ) |
 | U1 | MCP23017-E/SO | C47023 | |
 | U2 | 74AHCT1G125 | C7484 | |
 | R, C | 0805/1206 passives | see BOM | |
