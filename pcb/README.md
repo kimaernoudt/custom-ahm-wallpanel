@@ -1,6 +1,8 @@
-# Panel PCB (v1, untested)
+# Panel PCB (v2, untested)
 
-One board that replaces the hand wiring: the 4 encoders, the 4 scene buttons, all 48 ring LEDs, 4 button LEDs and the
+v2 (2026-11-09) follows the final faceplate layout: 5 buttons ON/OFF, IPAD, DJ, EXTRA and BEL (v1 had 4 buttons under the knobs).
+
+One board that replaces the hand wiring: the 4 encoders, the 5 buttons, all 48 ring LEDs, 5 button LEDs and the
 MCP23017 sit on it. One 10-wire UEXT cable and one 2-wire 5 V cable go to the Olimex ESP32-POE.
 
 ![front and back](preview.png)
@@ -25,7 +27,7 @@ MCP23017 sit on it. One 10-wire UEXT cable and one 2-wire 5 V cable go to the Ol
 | 1 | 3.3 V | MCP23017, pull-ups |
 | 2 | GND | |
 | 3 | GPIO4 | LED data (shifted to 5 V on the board) |
-| 4 | GPIO36 | scene buttons (resistor ladder 0 / 3.3k / 8.2k / 22k; the pull-up is the Olimex's own 10k behind its diode D4) |
+| 4 | GPIO36 | ON/OFF, IPAD, DJ, EXTRA (resistor ladder 0 / 3.3k / 8.2k / 22k; the pull-up is the Olimex's own 10k behind its diode D4) |
 | 5 | GPIO16 | I2C SCL (pull-ups 2.2k on the Olimex) |
 | 6 | GPIO13 | I2C SDA |
 
@@ -33,17 +35,19 @@ J2 (JST XH, back): 5 V and GND for the LEDs, from the Olimex 5 V pin. The UEXT p
 ESP32-POE Rev L schematic.
 
 Firmware: build with `PANEL_PCB 1` (top of `firmware/ahm_panel/panel_io.h`). That moves the ladder to GPIO36 and drives
-the button LEDs as pixels 48-51 of the LED chain.
+the button LEDs as pixels 48-52 of the LED chain (BEL, EXTRA, DJ, IPAD, ON/OFF). BEL is on MCP23017 GPB5 (pin 6), active low with
+the MCP pull-up.
 
 ## Ordering (JLCPCB)
 
+Step-by-step order checklist and the parts to buy separately: [ORDERING.md](ORDERING.md).
+
 - `production/ahm-panel-gerbers.zip`: 2 layers, 1.6 mm, any colour.
-- Assembly, top side only: `production/ahm-panel-bom.csv` + `production/ahm-panel-cpl-top.csv`. Check the LCSC part
-  numbers and the LED rotation in JLC's preview before paying (their rotations sometimes differ from KiCad's).
-- The 52 WS2812B 5050 LEDs are soldered by hand too (JLC had none in its assembly library, Oct 2026): the white dot
-  on the board marks pin 1 (the LED corner with the notch), which always faces the knob.
-- Solder yourself: 4 encoders, 4 tact switches, J1 and J2 (all through-hole, `production/hand-solder.csv`).
-  Upload `production/ahm-panel-cpl-jlc.csv` as the CPL.
+- Assembly, top side, Standard PCBA: `production/ahm-panel-bom.csv` + `production/ahm-panel-cpl-jlc.csv`.
+  JLCPCB fits everything on the front: the SMD parts, all 53 WS2812B-V5 LEDs (C2874885), the 4 smooth (no-click) ALPS EC11E1834403
+  encoders (C361165) and the 4 tact switches (C393938). The last two are through-hole, so JLC hand-solders them.
+- `ahm-panel-cpl-jlc.csv` gives the encoders and switches at their body centre (KiCad places them by pin 1).
+- Solder yourself: J1 and J2 on the back (`production/hand-solder.csv`).
 
 ## Rebuild
 

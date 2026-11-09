@@ -80,6 +80,11 @@ class AhmLink {
     send(b, sizeof(b));
   }
 
+  void playTrack(uint8_t player, uint8_t track) {   // player 0 mono 1, 1 mono 2, 2 stereo; track 0-127
+    uint8_t b[] = {0xF0, 0x00, 0x00, 0x1A, 0x50, 0x12, 0x01, 0x00, 0x00, 0x06, (uint8_t)(player & 0x7F), (uint8_t)(track & 0x7F), 0xF7};
+    send(b, sizeof(b));
+  }
+
   void getLevel(uint8_t n, uint8_t ch) { getReq(n, 0x0B, ch); }
   void getMute(uint8_t n, uint8_t ch) { getReq(n, 0x09, ch); }
 

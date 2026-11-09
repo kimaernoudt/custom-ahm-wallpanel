@@ -1,4 +1,4 @@
-"""AHM wall panel PCB v1: footprint placement and netlist (KiCad 7 pcbnew API).
+"""AHM wall panel PCB v2 (5 buttons): footprint placement and netlist (KiCad 7 pcbnew API).
 
 Board coordinates = faceplate coordinates: x from the left edge, y from the top edge, in mm.
 Run:  python3 place.py  -> ahm-panel-placed.kicad_pcb  (route.py routes it)
@@ -7,7 +7,8 @@ import math
 import pcbnew
 
 FP = "/usr/share/kicad/footprints/"
-KX = [25, 65, 105, 145]      # knob / button centres, same as 3d/ahm-panel.scad
+KX = [25, 65, 105, 145]      # knob centres, same as 3d/ahm-panel.scad
+BX = [25, 65, 65 + 80 / 3, 65 + 160 / 3, 145]   # buttons ON/OFF, IPAD, DJ, EXTRA, BEL (final layout, 2026-10-22)
 KY, BY = 30, 68
 LED_R = 15                   # LED circle radius
 X0, Y0, X1, Y1 = 4, 4, 166, 86   # board outline (box inside is 2.4..167.6 x 2.4..87.6)
@@ -79,7 +80,7 @@ for k, cx in enumerate(KX):
         cx, KY, origin=(7.5, 2.5),
         pads={"A": f"ENC{e}_A", "B": f"ENC{e}_B", "C": "GND", "S1": f"ENC{e}_SW", "S2": "GND", "MP": "GND"})
 
-# LED chain: ring 1 (LED1-12), ring 2, ring 3, ring 4, then the button LEDs right to left (LED49-52)
+# LED chain: ring 1 (LED1-12), ring 2, ring 3, ring 4, then the button LEDs right to left (LED49-53)
 chain = 0
 def dnet(i): return "LED_DATA" if i == 0 else f"D{i}"
 for k, cx in enumerate(KX):
@@ -100,22 +101,22 @@ for k, cx in enumerate(KX):
         px, py = p1.x + mm(1.15) * ux, p1.y + mm(1.15) * uy
         d.SetCenter(pcbnew.VECTOR2I(int(px), int(py))); d.SetEnd(pcbnew.VECTOR2I(int(px + mm(0.25)), int(py)))
         board.Add(d)
-for j, b in enumerate([3, 2, 1, 0]):          # EXTRA, DJ, IPAD, START
+for j, b in enumerate([4, 3, 2, 1, 0]):       # BEL, EXTRA, DJ, IPAD, ON/OFF
     n = 48 + j
     # same 5050 part as the rings (one part type, in stock); sits under the cap flange, clear of the switch pads
-    add(f"LED{n + 1}", "WS2812B-B", "LED_SMD", "LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm", KX[b], BY - 6.5,
-        pads={"1": "+5V", "2": (dnet(n + 1) if j < 3 else None), "3": "GND", "4": dnet(n)}, lcsc="")
+    add(f"LED{n + 1}", "WS2812B-B", "LED_SMD", "LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm", BX[b], BY - 6.5,
+        pads={"1": "+5V", "2": (dnet(n + 1) if j < 4 else None), "3": "GND", "4": dnet(n)}, lcsc="")
 
-# ---------------- scene buttons + resistor ladder (one analog pin) ----------------
+# ---------------- buttons: ON/OFF + 3 scenes on a resistor ladder (one analog pin), BEL on the MCP23017 ----------------
 # The Olimex feeds UEXT pin 4 to GPIO36 through a Schottky diode (D4, anode on the ESP side) with its own 10k
 # pull-up (R37), so the pull-up lives on the Olimex and GPIO36 reads the ladder voltage plus the diode drop.
 # With 10k on top: 0 / 3.3k / 8.2k / 22k -> ~0.05-0.3, 0.86-1.04, 1.51-1.65, 2.28-2.36 V, idle 3.3 V.
 LADDER_R = [None, "3.3k", "8.2k", "22k"]
-for b, cx in enumerate(KX):
-    sw_net = "LADDER" if b == 0 else f"LAD{b + 1}"
+for b, cx in enumerate(BX):
+    sw_net = "BEL" if b == 4 else "LADDER" if b == 0 else f"LAD{b + 1}"
     add(f"SW{b + 1}", "6x6 mm tact, 5 mm high", "Button_Switch_THT", "SW_PUSH_6mm_H5mm", cx, BY, origin=(3.25, 2.25),
         pads={"1": sw_net, "2": "GND"})
-    if b:
+    if 0 < b < 4:
         add(f"R{b + 1}", LADDER_R[b], "Resistor_SMD", "R_0805_2012Metric", cx + 8, BY, rot=90,
             pads={"1": "LADDER", "2": sw_net})
 add("C1", "100nF", "Capacitor_SMD", "C_0805_2012Metric", 37, 71, rot=90, pads={"1": "LADDER", "2": "GND"})
@@ -123,9 +124,10 @@ add("C1", "100nF", "Capacitor_SMD", "C_0805_2012Metric", 37, 71, rot=90, pads={"
 # ---------------- MCP23017 I/O expander ----------------
 U1 = {"9": "+3V3", "10": "GND", "12": "SCL", "13": "SDA", "15": "GND", "16": "GND", "17": "GND", "18": "RST",
       "21": "ENC1_A", "22": "ENC1_B", "23": "ENC2_A", "24": "ENC2_B", "25": "ENC3_A", "26": "ENC3_B", "27": "ENC1_SW",
-      "1": "ENC4_A", "2": "ENC4_B", "3": "ENC2_SW", "4": "ENC3_SW", "5": "ENC4_SW"}
-add("U1", "MCP23017-E/SO", "Package_SO", "SOIC-28W_7.5x17.9mm_P1.27mm", 85, 77, rot=90, pads=U1, lcsc="C47023")
-add("C2", "100nF", "Capacitor_SMD", "C_0805_2012Metric", 87.5, 84.4, rot=0, pads={"1": "+3V3", "2": "GND"})  # under VDD/VSS
+      "1": "ENC4_A", "2": "ENC4_B", "3": "ENC2_SW", "4": "ENC3_SW", "5": "ENC4_SW", "6": "BEL"}   # BEL: GPB5, MCP pull-up
+# sits low between the IPAD and DJ buttons
+add("U1", "MCP23017-E/SO", "Package_SO", "SOIC-28W_7.5x17.9mm_P1.27mm", 78, 79, rot=90, pads=U1, lcsc="C47023")
+add("C2", "100nF", "Capacitor_SMD", "C_0805_2012Metric", 89.5, 81, rot=90, pads={"1": "+3V3", "2": "GND"})  # next to VDD/VSS
 add("R5", "10k", "Resistor_SMD", "R_0805_2012Metric", 98, 82, rot=0, pads={"1": "+3V3", "2": "RST"})
 
 # ---------------- connectors (on the back) ----------------
@@ -157,7 +159,7 @@ def text(s, x, y, size=1.2, layer=pcbnew.F_SilkS):
     if layer == pcbnew.B_SilkS: t.SetMirrored(True)
     board.Add(t)
 
-text("AHM WALL PANEL v1", 145, 82, 1.2)
+text("AHM WALL PANEL v2", 145, 82, 1.2)
 text("UEXT  to Olimex", 46, 72, 1.2, pcbnew.B_SilkS)
 text("5V  from Olimex", 125, 76, 1.2, pcbnew.B_SilkS)
 
