@@ -28,14 +28,16 @@ const uint8_t IODIRA = 0x00, IODIRB = 0x01, GPPUA = 0x0C, GPPUB = 0x0D, GPIOA = 
 const uint8_t ENC_A[4] = {0, 2, 4, 8};     // INPUT, TRAP, SAS, TOOG
 const uint8_t ENC_B[4] = {1, 3, 5, 9};
 const uint8_t PUSH[4] = {6, 10, 11, 12};
-const uint8_t BTN_LED[4] = {7, 13, 14, 15}; // START, IPAD, DJ, EXTRA
-const uint16_t OUTPUT_MASK = (1 << 7) | (1 << 13) | (1 << 14) | (1 << 15);
+const uint8_t BTN_LED[4] = {7, 13, 14, 15}; // hand-wired: ON/OFF, IPAD, DJ, EXTRA button LEDs
+const uint8_t BEL_BIT = 13;                 // PCB: BEL button on GPB5, active low
+const uint16_t OUTPUT_MASK = PANEL_PCB ? 0 : (1 << 7) | (1 << 13) | (1 << 14) | (1 << 15);
 const uint8_t IN_A = (uint8_t)~OUTPUT_MASK, IN_B = (uint8_t)(~OUTPUT_MASK >> 8);   // input bits per port
 
 // ---- shared between the I/O task and loop() ----
 portMUX_TYPE ioMux = portMUX_INITIALIZER_UNLOCKED;
 volatile int16_t encDelta[4];      // detents since last read
 volatile uint8_t pushEvents;       // bit per knob, set on press
+volatile bool belEvent;            // BEL pressed (PCB)
 volatile uint16_t ledWanted;       // button LED bits to write
 volatile bool mcpOk = false;
 
@@ -71,6 +73,10 @@ void ioTask(void *) {
   int8_t count[4] = {0};
   uint16_t pushStable = 0xFFFF, pushLast = 0xFFFF;
   uint32_t pushSince[4] = {0};
+#if PANEL_PCB
+  bool belStable = true, belLast = true;
+  uint32_t belSince = 0;
+#endif
   uint16_t ledOut = 0xFFFF;
   uint32_t retryAt = 0;
 
@@ -116,6 +122,15 @@ void ioTask(void *) {
       }
     }
 
+#if PANEL_PCB
+    bool bel = (v >> BEL_BIT) & 1;   // 20 ms debounce, active low
+    if (bel != belLast) { belLast = bel; belSince = millis(); }
+    else if (bel != belStable && millis() - belSince > 20) {
+      belStable = bel;
+      if (!bel) belEvent = true;
+    }
+#endif
+
     uint16_t want = ledWanted;
     if (want != ledOut) {
       if (mcpWrite(OLATA, want & 0xFF, want >> 8)) ledOut = want;
@@ -138,6 +153,12 @@ int takeEncoder(int k) {
   return d;
 }
 
+bool takeBel() {
+  bool b = belEvent;
+  belEvent = false;
+  return b;
+}
+
 uint8_t takePushes() {
   portENTER_CRITICAL(&ioMux);
   uint8_t p = pushEvents;
@@ -146,8 +167,8 @@ uint8_t takePushes() {
   return p;
 }
 
-// ---- LED rings (+ button LEDs on the PCB: pixels 48..51 = EXTRA, DJ, IPAD, START) ----
-const int NUM_PIXELS = 4 * LEDS_PER_RING + (PANEL_PCB ? 4 : 0);
+// ---- LED rings (+ button LEDs on the PCB: pixels 48..52 = BEL, EXTRA, DJ, IPAD, ON/OFF) ----
+const int NUM_PIXELS = 4 * LEDS_PER_RING + (PANEL_PCB ? 5 : 0);
 // The Olimex 5 V rail gives 2 A. All 48 ring LEDs fully lit at 255 draw ~1.4 A plus the ESP32 and button LEDs,
 // so brightness is capped at 160 (~0.9 A worst case).
 const uint8_t MAX_BRIGHTNESS = 160;
@@ -155,8 +176,8 @@ Adafruit_NeoPixel rings(NUM_PIXELS, PIN_LEDS, NEO_GRB + NEO_KHZ800);
 
 void setButtonLeds(uint8_t mask) {   // bit per button; on the PCB this only fills the pixel buffer, show() sends it
 #if PANEL_PCB
-  for (int i = 0; i < 4; i++)        // lit = active scene, the rest glow faintly so they can be found in the dark
-    rings.setPixelColor(4 * LEDS_PER_RING + 3 - i, mask & (1 << i) ? rings.Color(255, 255, 255) : rings.Color(12, 12, 12));
+  for (int i = 0; i < 5; i++)        // lit = on / active scene, the rest glow faintly so they can be found in the dark
+    rings.setPixelColor(4 * LEDS_PER_RING + 4 - i, mask & (1 << i) ? rings.Color(255, 255, 255) : rings.Color(12, 12, 12));
   return;
 #endif
   uint16_t v = 0;
@@ -165,7 +186,7 @@ void setButtonLeds(uint8_t mask) {   // bit per button; on the PCB this only fil
   ledWanted = v;
 }
 
-// Scene buttons on one analog pin. Returns the button (0..3) on a new press, -1 otherwise. Call every few ms.
+// ON/OFF, IPAD, DJ, EXTRA on one analog pin. Returns the button (0..3) on a new press, -1 otherwise. Call every few ms.
 // Hand-wired: 10k pull-up, 0 / 2.2k / 4.7k / 10k -> 0, 0.59, 1.05, 1.65 V, idle 3.3 V.
 // PCB: the Olimex's own 10k pull-up and Schottky diode on UEXT pin 4, 0 / 3.3k / 8.2k / 22k
 //      -> about 0.05-0.3, 0.86-1.04, 1.51-1.65, 2.28-2.36 V (diode drop included), idle 3.3 V.
