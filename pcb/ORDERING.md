@@ -1,7 +1,7 @@
 # Ordering the panel PCB (2 café panels)
 
 JLCPCB makes the board and fits the LEDs, encoders and buttons. You solder only the two connectors on the back.
-Nothing here is ordered yet: prices are estimates from November 2026 and the stock must be checked in the quote.
+Ordered on 2026-11-20 (5 boards, 2 assembled, DHL Express DDP, €146.55 all in). The full list of what else to buy is in [PARTS-LIST.md](../PARTS-LIST.md).
 
 ## 1. JLCPCB order (https://cart.jlcpcb.com/quote)
 
@@ -72,7 +72,7 @@ Conrad.be or Amazon.be, next-day to a few days) rather than AliExpress (2-4 week
 | 8 | Knob for 6 mm flat (D) shaft, about 20 mm diameter | "aluminium knob 6mm D shaft 20mm black" | €12 |
 | 8 | M7 x 0.75 hex nut + washer (in case the encoders arrive without) | "M7x0.75 potentiometer nut" | €2 |
 
-Printed (`3d/`): `faceplate-pcb.stl` and `backbox.stl` x 2, `buttoncap.stl` x 8 in clear/natural PETG, plus the M3
+Printed (`3d/`): `faceplate-pcb.stl` and `backbox.stl` x 2, `buttoncap.stl` x 10 (5 per panel) in clear/natural PETG, plus the M3
 screws, heat-set inserts and wall screws from [PARTS-LIST.md](../PARTS-LIST.md).
 
 ## 3. When the boards arrive
