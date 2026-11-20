@@ -27,9 +27,11 @@ Next screens:
    from **My Inventory** on the LED row. J1 and J2 are not in the BOM, so JLC flags them as "not
    placed"; that is expected. If a part is out of stock, the alternatives are below.
 3. Placement preview, check these three things before paying:
-   - **LEDs**: the corner notch / pin-1 mark of every LED sits on the white dot printed on the board (the dot always faces
-     the knob). If all 53 are off by the same angle, rotate one and apply to all; that only means JLC's footprint is
-     drawn differently from KiCad's.
+   - **LEDs**: JLC's pin-1 mark of every LED sits on the white dot printed on the board (the dot is pin 1, 5 V, and
+     always faces the knob). Do not go by the cut corner of the LED: on a WS2812B the cut corner is pin 3 (ground),
+     so it belongs on the corner diagonally **opposite** the white dot. If all 53 are off by the same angle, rotate
+     one and apply to all; that only means JLC's footprint is drawn differently from KiCad's. Reversed LEDs get 5 V
+     and ground swapped and do not survive it.
    - **Encoders**: open the datasheet link on the C361165 line and check the shaft is 20 mm (it is in the same
      ALPS EC11E family as the 20 mm parts, but JLC's page does not list the length).
      In the preview: the 3 signal pins left of the shaft, the 2 switch pins right of it, shaft in the

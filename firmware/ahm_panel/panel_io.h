@@ -30,7 +30,9 @@ const uint8_t ENC_B[4] = {1, 3, 5, 9};
 const uint8_t PUSH[4] = {6, 10, 11, 12};
 const uint8_t BTN_LED[4] = {7, 13, 14, 15}; // hand-wired: ON/OFF, IPAD, DJ, EXTRA button LEDs
 const uint8_t BEL_BIT = 13;                 // PCB: BEL button on GPB5, active low
-const uint16_t OUTPUT_MASK = PANEL_PCB ? 0 : (1 << 7) | (1 << 13) | (1 << 14) | (1 << 15);
+// GPA7 and GPB7 are output-only on current MCP23017 chips (as inputs they can disturb the I2C bus), so they are
+// always outputs. On the PCB they are not connected and stay low.
+const uint16_t OUTPUT_MASK = PANEL_PCB ? (1 << 7) | (1 << 15) : (1 << 7) | (1 << 13) | (1 << 14) | (1 << 15);
 const uint8_t IN_A = (uint8_t)~OUTPUT_MASK, IN_B = (uint8_t)(~OUTPUT_MASK >> 8);   // input bits per port
 
 // ---- shared between the I/O task and loop() ----
@@ -169,9 +171,11 @@ uint8_t takePushes() {
 
 // ---- LED rings (+ button LEDs on the PCB: pixels 48..52 = BEL, EXTRA, DJ, IPAD, ON/OFF) ----
 const int NUM_PIXELS = 4 * LEDS_PER_RING + (PANEL_PCB ? 5 : 0);
-// The Olimex 5 V rail gives 2 A. All 48 ring LEDs fully lit at 255 draw ~1.4 A plus the ESP32 and button LEDs,
-// so brightness is capped at 160 (~0.9 A worst case).
-const uint8_t MAX_BRIGHTNESS = 160;
+// Power budget: the plain Olimex ESP32-POE delivers about 4 W in total over PoE (Olimex support's figure), and the
+// board with Ethernet takes about 1 W of that. A WS2812B-V5 draws about 12 mA per colour at full drive plus 0.6 mA idle.
+// At 100, all 48 ring LEDs lit plus all 5 buttons white is about 0.45 A at 5 V (2.2 W), so about 3.2 W in total.
+// Do not raise this on PoE. The ESP32-POE-ISO only has 2 W (400 mA): use 30 there.
+const uint8_t MAX_BRIGHTNESS = 100;
 Adafruit_NeoPixel rings(NUM_PIXELS, PIN_LEDS, NEO_GRB + NEO_KHZ800);
 
 void setButtonLeds(uint8_t mask) {   // bit per button; on the PCB this only fills the pixel buffer, show() sends it
