@@ -15,7 +15,8 @@ T = 3;              // faceplate thickness
 // ---- controls (x from left, y from top, like the 2D drawing) ----
 KX     = [25, 65, 105, 145];
 KNOBS  = ["INPUT", "TRAP", "SAS", "TOOG"];
-BTNS   = ["START", "IPAD", "DJ", "EXTRA"];
+BX     = [25, 65, 65 + 80 / 3, 65 + 160 / 3, 145];   // final layout (2026-10-22): 5 buttons
+BTNS   = ["ON/OFF", "IPAD", "DJ", "EXTRA", "BEL"];
 KY     = 30;        // knob centre from top
 BY     = 68;        // button centre from top
 ENC_D  = 7.4;       // EC11 M7 bushing hole (+0.4 print clearance)
@@ -57,15 +58,20 @@ module rounded(w, h, t, r) {
 }
 
 module label_text(h) {
-    for (i = [0:3]) {
+    for (i = [0:3])
         translate([KX[i], fy(KY + 25), 0])
             linear_extrude(h) text(KNOBS[i], size = 4, font = "Inter:style=Bold",
                                    halign = "center", spacing = 1.12);
-        translate([KX[i], fy(BY + 11.5), 0])
+    for (i = [0:4]) {
+        translate([BX[i], fy(BY + 11.5), 0])
             linear_extrude(h) text(BTNS[i], size = 3.2, font = "Inter:style=Bold",
                                    halign = "center", spacing = 1.12);
     }
-    translate([12, fy(KY + 29.5) - 0.2, 0]) cube([W - 24, 0.4, h]);
+    // white strip between INPUT + ON/OFF and the rest, and a frame round BEL
+    translate([45 - 0.3, fy(81), 0]) cube([0.6, 72, h]);
+    translate([BX[4], fy(71), 0]) linear_extrude(h) difference() {
+        square([22, 22], center = true); square([21.2, 21.2], center = true);
+    }
 }
 
 module led_windows(d, h, z) {
@@ -90,9 +96,8 @@ module faceplate() {
                     cylinder(d = LED_D, h = T + 2);
             // pocket for the LED ring on the back
             if (!PCB) translate([KX[i], fy(KY), -0.01]) cylinder(d = RING_POCKET_D, h = RING_POCKET_T);
-            // button
-            translate([KX[i], fy(BY), -1]) cylinder(d = BTN_D, h = T + 2);
         }
+        for (i = [0:4]) translate([BX[i], fy(BY), -1]) cylinder(d = BTN_D, h = T + 2);   // buttons
         // corner screws, countersunk from the front
         for (p = [[CS, CS], [W - CS, CS], [CS, H - CS], [W - CS, H - CS]])
             translate([p[0], p[1], 0]) {
@@ -162,8 +167,10 @@ else if (part == "pcbfit") {   // section through the button row: faceplate, PCB
     for (i = [0:3]) {
         color("#9aa0a6") cut() translate([KX[i] - 6, fy(KY) - 6.5, D - PCB_GAP]) cube([12, 13, PCB_GAP]);   // EC11E body
         color("#c8c8c8") cut() translate([KX[i], fy(KY), D - PCB_GAP]) cylinder(d = 7, h = PCB_GAP + T + 2);
-        color("#e0e0e0") cut() translate([KX[i] - 3, fy(BY) - 3, D - PCB_GAP]) cube([6, 6, SW_H]);
-        color("#f2f2f2") cut() translate([KX[i], fy(BY), D - PCB_GAP + SW_H]) buttoncap();
+    }
+    for (i = [0:4]) {
+        color("#e0e0e0") cut() translate([BX[i] - 3, fy(BY) - 3, D - PCB_GAP]) cube([6, 6, SW_H]);
+        color("#f2f2f2") cut() translate([BX[i], fy(BY), D - PCB_GAP + SW_H]) buttoncap();
     }
 }
 else {

@@ -37,6 +37,11 @@ def get_mute(n, ch):
     return SYSEX_HEADER + bytes([n, 0x01, 0x09, ch, 0xF7])
 
 
+def play_track(player, track):
+    """player 0 = mono 1, 1 = mono 2, 2 = stereo; track 0-127 (track 1 in System Manager = 0)."""
+    return SYSEX_HEADER + bytes([0x00, 0x06, player, track, 0xF7])
+
+
 def level_text(lv):
     if lv == 0:
         return "-inf"
@@ -54,7 +59,7 @@ def channel_name(n, ch):
 class Parser:
     """Feeds raw bytes, yields decoded events as tuples:
     ("level", n, ch, lv) · ("step", n, ch, up) · ("mute", n, ch, on)
-    ("scene", scene) · ("get_level", n, ch) · ("get_mute", n, ch) · ("unknown", bytes)
+    ("scene", scene) · ("get_level", n, ch) · ("get_mute", n, ch) · ("play", player, track) · ("unknown", bytes)
     """
 
     def __init__(self):
@@ -124,6 +129,8 @@ class Parser:
     def _sysex(self, msg):
         if msg.startswith(SYSEX_HEADER) and len(msg) >= len(SYSEX_HEADER) + 5:
             n, _, cmd, ch = msg[8:12]
+            if n == 0x00 and msg[9] == 0x06:   # audio playback: player 0 mono 1, 1 mono 2, 2 stereo; track 0-127
+                return ("play", msg[10], msg[11])
             if cmd == 0x0B:
                 return ("get_level", n, ch)
             if cmd == 0x09:

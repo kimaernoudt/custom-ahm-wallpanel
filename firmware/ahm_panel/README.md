@@ -15,8 +15,14 @@ stored in the panel and survives power cuts:
 | AHM IP address and port | 192.168.1.100 : 51325 |
 | Panel network | DHCP, or a fixed IP |
 | Knob 1–4: label, what it controls (input, zone, control group, input of the active scene, off), number | INPUT = input of active scene, TRAP = CG 1, SAS = CG 2, TOOG = zone 3 |
-| Button 1–4: label, scene number, the input that belongs to it | START 1 (input 1), IPAD 2 (input 1), DJ 3 (input 3), EXTRA 4 (input 5) |
+| Button 1–5: label and what it does: scene (scene number + its input), amps on/off (input number), play sample (track + player), off | ON/OFF = amps via input 16, IPAD scene 2 (input 1), DJ scene 3 (input 3), EXTRA scene 4 (input 5), BEL = track 1 on the stereo player |
 | Level steps per click, ring brightness, ring start LED and direction | 2, 60, LED 0, clockwise |
+
+Two settings are needed on the AHM itself (System Manager), because the AHM has no direct command for them:
+- **ON/OFF**: the panel toggles the mute of input 16 (an unused input). Set **GPO 1** to follow input 16's mute,
+  inverted if needed so that unmuted = amps on. The button is lit while the amps are on.
+- **BEL**: put the bell sound as **track 1** of the USB/SD playback and route the stereo player to the café zones.
+  The button flashes for a second when pressed. BEL exists only on the panel PCB (MCP23017 GPB5).
 
 Labels on the faceplate are printed, so a new room with different names needs a new label inlay (`3d/ahm-panel.scad`).
 Hold the Olimex **BUT1** button while powering up to go back to the defaults (also resets the password).
@@ -27,6 +33,7 @@ After the first USB upload, updates go over the network: Arduino IDE > Tools > P
 - Turning sends an absolute level (faster turning moves further). Pressing a knob does nothing (no mute); a ring turns red if the channel is muted from elsewhere.
 - Rings show the AHM's real level and follow changes made in System Manager or Custom Control.
 - A scene button recalls the scene, lights up, and re-reads all levels.
+- ON/OFF toggles the amps (see above); BEL plays the bell track. On the PCB the unlit buttons glow faintly.
 - If the AHM is unreachable the rings show a slow amber dot and the active button blinks; the panel reconnects by itself
   (1 → 10 s back-off) and detects a dead link within 15 s with a keep-alive.
 - A watchdog restarts the panel if the firmware ever hangs for 5 s. Status: `http://<panel IP>/status`.

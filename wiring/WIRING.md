@@ -28,7 +28,7 @@ The Olimex ESP32-POE's Ethernet takes most of its pins. GPIO35 and GPIO39 are re
 | GPA4 | SAS encoder A | | GPB4 | TOOG push switch |
 | GPA5 | SAS encoder B | | GPB5 | IPAD button LED + |
 | GPA6 | INPUT push switch | | GPB6 | DJ button LED + |
-| GPA7 | START button LED + | | GPB7 | EXTRA button LED + |
+| GPA7 | ON/OFF button LED + | | GPB7 | EXTRA button LED + |
 
 GPA7 and GPB7 are output-only on current MCP23017 chips, which is why they drive LEDs.
 
@@ -49,7 +49,7 @@ GPA7 and GPB7 are output-only on current MCP23017 chips, which is why they drive
 
 | Button | Resistor | Voltage on GPIO33 when pressed |
 |---|---|---|
-| START | none (wire) | ≈ 0.00 V |
+| ON/OFF | none (wire) | ≈ 0.00 V |
 | IPAD | 2.2k | ≈ 0.59 V |
 | DJ | 4.7k | ≈ 1.05 V |
 | EXTRA | 10k | ≈ 1.65 V |

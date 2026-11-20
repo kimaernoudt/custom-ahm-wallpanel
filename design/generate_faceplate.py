@@ -2,7 +2,8 @@ import math
 W,H=170,90
 KX=[25,65,105,145]
 knobs=list(zip(KX,['INPUT','TRAP','SAS','TOOG'])); KY=30; RR=15
-btns=list(zip(KX,['START','IPAD','DJ','EXTRA'])); BY=68
+BX=[25,65,65+80/3,65+160/3,145]   # final layout (2026-10-22)
+btns=list(zip(BX,['ON/OFF','IPAD','DJ','EXTRA','BEL'])); BY=68
 holes=[(6,6),(W-6,6),(6,H-6),(W-6,H-6)]
 def font(sz,w=600,anchor='middle'): return f'font-family="Inter, DejaVu Sans, Arial" font-size="{sz}" font-weight="{w}" text-anchor="{anchor}" letter-spacing="0.6"'
 def ang(i): return math.radians(i*30-90)
@@ -17,7 +18,8 @@ for x,_ in btns: c.append(f'<circle cx="{x}" cy="{BY}" r="6.1"/>')
 c.append('</g><g fill="#0000ff">')
 for x,l in knobs: c.append(f'<text x="{x}" y="{KY+25}" {font(4)}>{l}</text>')
 for x,l in btns: c.append(f'<text x="{x}" y="{BY+11.5}" {font(3.2)}>{l}</text>')
-c.append(f'<rect x="12" y="{KY+29.5}" width="146" height="0.3"/></g></svg>')
+c.append('<rect x="44.7" y="9" width="0.6" height="72"/></g>')
+c.append('<rect x="134" y="60" width="22" height="22" fill="none" stroke="#0000ff" stroke-width="0.4"/></svg>')
 open('faceplate-cut.svg','w').write('\n'.join(c))
 lvl={'TRAP':8,'SAS':6,'TOOG':12,'INPUT':7}; muted={'TOOG'}
 p=[f'<svg xmlns="http://www.w3.org/2000/svg" width="1110" height="620" viewBox="-6.67 -6.67 {W+13.33} {H+13.33}">',
@@ -40,7 +42,8 @@ for x,l in knobs:
     p.append(f'<line x1="{x}" y1="{KY-9}" x2="{x}" y2="{KY-6}" stroke="#e8e8e8" stroke-width="0.7" stroke-linecap="round"/>')
     p.append(f'<text x="{x}" y="{KY+25}" {font(4)} fill="#e6e6e6">{l}</text>')
     if l in muted: p.append(f'<text x="{x}" y="{KY+19.8}" {font(2.4)} fill="#ff3b30">MUTE</text>')
-p.append(f'<rect x="12" y="{KY+29.5}" width="146" height="0.3" fill="#3a3c40"/>')
+p.append('<rect x="44.7" y="9" width="0.6" height="72" fill="#e6e6e6"/>')
+p.append('<rect x="134" y="60" width="22" height="22" fill="none" stroke="#e6e6e6" stroke-width="0.4"/>')
 for x,l in btns:
     on=(l=='IPAD')
     p.append(f'<circle cx="{x}" cy="{BY}" r="6.1" fill="#0b0b0c"/>')

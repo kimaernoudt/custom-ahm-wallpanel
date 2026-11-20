@@ -29,13 +29,25 @@ struct KnobCfg {
   uint8_t ch;         // input / zone / control group number
 };
 
-struct ButtonCfg {
-  char label[12];
-  uint16_t scene;     // scene recalled by the button, 0 = button off
-  uint8_t input;      // input the K_SCENE_INPUT knob controls in this scene, 0 = keep the previous one
+enum ButtonType : uint8_t {
+  B_OFF = 0,          // button does nothing
+  B_SCENE = 1,        // recall a scene
+  B_POWER = 2,        // amps on/off: toggles the mute of an input that the AHM's GPO follows (unmuted = on)
+  B_SAMPLE = 3,       // play an AHM playback track
 };
 
-const uint16_t SETTINGS_VERSION = 1;
+const int NUM_BUTTONS = 5;   // ON/OFF, IPAD, DJ, EXTRA, BEL (the hand-wired panel has only the first 4)
+
+struct ButtonCfg {
+  char label[12];
+  uint8_t type;
+  uint16_t scene;     // B_SCENE: scene recalled by the button
+  uint8_t input;      // B_SCENE: input the K_SCENE_INPUT knob controls in this scene, 0 = keep the previous one
+  uint8_t ch;         // B_POWER: the input whose mute the GPO follows; B_SAMPLE: track 1-128
+  uint8_t player;     // B_SAMPLE: 0 = mono 1, 1 = mono 2, 2 = stereo playback
+};
+
+const uint16_t SETTINGS_VERSION = 2;
 
 struct Settings {
   uint16_t version;
@@ -46,7 +58,7 @@ struct Settings {
   bool dhcp;
   char ip[16], gateway[16], subnet[16];
   KnobCfg knob[4];
-  ButtonCfg button[4];
+  ButtonCfg button[NUM_BUTTONS];
   uint8_t step;        // level change per encoder click
   uint8_t brightness;  // LED rings, 5..MAX_BRIGHTNESS
   uint8_t ringOffset;  // LED number at the "minimum" position, 0..11
@@ -70,10 +82,11 @@ void setDefaults() {
   cfg.knob[1] = {"TRAP", K_CGROUP, 1};
   cfg.knob[2] = {"SAS", K_CGROUP, 2};
   cfg.knob[3] = {"TOOG", K_ZONE, 3};
-  cfg.button[0] = {"START", 1, 1};
-  cfg.button[1] = {"IPAD", 2, 1};
-  cfg.button[2] = {"DJ", 3, 3};
-  cfg.button[3] = {"EXTRA", 4, 5};
+  cfg.button[0] = {"ON/OFF", B_POWER, 0, 0, 16, 0};   // set GPO 1 on the AHM to follow input 16's mute
+  cfg.button[1] = {"IPAD", B_SCENE, 2, 1, 0, 0};
+  cfg.button[2] = {"DJ", B_SCENE, 3, 3, 0, 0};
+  cfg.button[3] = {"EXTRA", B_SCENE, 4, 5, 0, 0};
+  cfg.button[4] = {"BEL", B_SAMPLE, 0, 0, 1, 2};      // track 1 on the stereo player
   cfg.step = 2;
   cfg.brightness = 60;
   cfg.ringOffset = 0;
@@ -93,8 +106,11 @@ void loadSettings() {
 
 void saveSettings() { prefs.putBytes("cfg", &cfg, sizeof(cfg)); }
 
-// Active scene button (0..3) survives a reboot, so the INPUT knob keeps the right channel
-uint8_t loadActiveButton() { return prefs.getUChar("btn", 0) & 3; }
+// Active scene button survives a reboot, so the INPUT knob keeps the right channel
+uint8_t loadActiveButton() {
+  uint8_t b = prefs.getUChar("btn", 1);
+  return b < NUM_BUTTONS && cfg.button[b].type == B_SCENE ? b : 1;
+}
 void saveActiveButton(uint8_t b) {
   if (prefs.getUChar("btn", 255) != b) prefs.putUChar("btn", b);
 }

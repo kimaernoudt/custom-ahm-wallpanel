@@ -69,6 +69,9 @@ class FakeAhm:
             on = self.mutes.get((n, ch), False)
             self.log(peer, f"GET MUTE    {self.name(n, ch)} -> {'on' if on else 'off'}")
             writer.write(ahm.mute(n, ch, on))
+        elif kind == "play":
+            _, player, track = ev
+            self.log(peer, f"PLAY        track {track + 1} on {['mono 1', 'mono 2', 'stereo'][player] if player < 3 else player} player")
         else:
             self.log(peer, f"UNKNOWN     {ev[1].hex(' ')}")
 

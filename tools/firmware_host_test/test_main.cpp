@@ -29,7 +29,19 @@ int main(int argc, char **argv) {
   printf("SAS ring LED0 colour %06X (expect not FF0000)\n", rings.px[2 * 12]);
   printf("TRAP ring lit LEDs: "); for (int i = 0; i < 12; i++) printf("%c", rings.px[12 + i] ? '#' : '.'); printf("\n");
   printf("--- press DJ button\n"); ladder(PANEL_PCB ? 1580 : 1050); run(600);
+#if PANEL_PCB
+  printf("button pixels ON/OFF..BEL: "); for (int i = 0; i < 5; i++) printf("%06X ", rings.px[52 - i]); printf("(expect DJ FFFFFF)\n");
+#else
   printf("button LEDs olat %04X (expect bit14 = DJ)\n", (unsigned)sim_olat);
+#endif
+  printf("--- press ON/OFF (toggles the mute of input 16)\n"); ladder(100); run(300);
+  printf("amps %s (expect off: the emulator starts unmuted)\n", powerOn[0] == 1 ? "on" : "off");
+  printf("--- press ON/OFF again\n"); ladder(100); run(300);
+  printf("amps %s (expect on)\n", powerOn[0] == 1 ? "on" : "off");
+#if PANEL_PCB
+  printf("--- press BEL (play track 1 on stereo player)\n"); setBit(BEL_BIT, 0); run(60); setBit(BEL_BIT, 1); run(100);
+  printf("BEL pixel %06X (expect FFFFFF while flashing)\n", rings.px[48]);
+#endif
   printf("--- turn INPUT +1\n"); turn(0, 1); run(200);
   printf("--- status\n%s", statusText().c_str());
   if (argc > 2) {   // reconnect test: the harness kills and restarts the emulator now
@@ -38,9 +50,9 @@ int main(int argc, char **argv) {
     printf("--- after restart: %s\n", ahm.connected() ? "connected" : "NOT connected");
   }
   printf("--- web save\n");
-  web.args = {{"room", "Bar"}, {"ahm", "10.0.0.5"}, {"port", "51325"}, {"kl0", "MIC"}, {"kt0", "1"}, {"kc0", "7"}, {"bs0", "12"}, {"step", "99"}};
+  web.args = {{"room", "Bar"}, {"ahm", "10.0.0.5"}, {"port", "51325"}, {"kl0", "MIC"}, {"kt0", "1"}, {"kc0", "7"}, {"bt1", "1"}, {"bs1", "12"}, {"bt4", "3"}, {"bc4", "7"}, {"bp4", "1"}, {"step", "99"}};
   web.routes["/save"]();
-  printf("room=%s ahm=%s knob0=%s type %d ch %d button0 scene %d step %d\n", cfg.room, cfg.ahmIp, cfg.knob[0].label, cfg.knob[0].type, cfg.knob[0].ch, cfg.button[0].scene, cfg.step);
+  printf("room=%s ahm=%s knob0=%s type %d ch %d button1 scene %d button4 type %d track %d player %d step %d\n", cfg.room, cfg.ahmIp, cfg.knob[0].label, cfg.knob[0].type, cfg.knob[0].ch, cfg.button[1].scene, cfg.button[4].type, cfg.button[4].ch, cfg.button[4].player, cfg.step);
   web.routes["/"]();
   printf("page bytes %zu, has MIC: %d\n", web.lastBody.size(), (int)(web.lastBody.find("MIC") != std::string::npos));
   return 0;

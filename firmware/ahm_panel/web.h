@@ -6,6 +6,8 @@ WebServer web(80);
 extern String statusText();   // from ahm_panel.ino
 
 const char *TYPE_NAMES[] = {"Off", "Input", "Zone", "Control group", "Input of active scene"};
+const char *BTN_TYPE_NAMES[] = {"Off", "Scene", "Amps on/off", "Play sample"};
+const char *PLAYER_NAMES[] = {"Mono 1", "Mono 2", "Stereo"};
 
 String esc(const char *s) {
   String o;
@@ -31,7 +33,7 @@ bool authorised() {
 void handleRoot() {
   if (!authorised()) return;
   String h;
-  h.reserve(9000);
+  h.reserve(12000);
   h += F("<!doctype html><meta name=viewport content='width=device-width'><title>AHM panel</title><style>"
          "body{font:15px system-ui;background:#17181b;color:#eee;max-width:760px;margin:auto;padding:16px}"
          "fieldset{border:1px solid #444;border-radius:8px;margin:12px 0}label{display:inline-block;margin:4px 12px 4px 0}"
@@ -63,13 +65,26 @@ void handleRoot() {
     h += field("Number", "kc" + i, String(cfg.knob[k].ch), "type=number min=1 max=64");
     h += "</div>";
   }
-  h += F("</fieldset><fieldset><legend>Scene buttons, left to right</legend>");
-  for (int b = 0; b < 4; b++) {
+  h += F("</fieldset><fieldset><legend>Buttons, left to right</legend>"
+         "<small>Scene: recall the scene, the INPUT knob follows its input (0 = keep). "
+         "Amps on/off: toggles the mute of the input number; set the AHM GPO to follow that mute. "
+         "Play sample: plays the track number on the chosen player.</small>");
+  for (int b = 0; b < NUM_BUTTONS; b++) {
     String i(b);
+    const ButtonCfg &c = cfg.button[b];
     h += "<div>";
-    h += field("Label", "bl" + i, esc(cfg.button[b].label), "maxlength=11 size=8");
-    h += field("Scene (0 = off)", "bs" + i, String(cfg.button[b].scene), "type=number min=0 max=500");
-    h += field("Its input (0 = keep)", "bi" + i, String(cfg.button[b].input), "type=number min=0 max=64");
+    h += field("Label", "bl" + i, esc(c.label), "maxlength=11 size=8");
+    h += "<label>Does<select name=bt" + i + ">";
+    for (int t = 0; t < 4; t++)
+      h += "<option value=" + String(t) + (c.type == t ? " selected>" : ">") + BTN_TYPE_NAMES[t] + "</option>";
+    h += "</select></label>";
+    h += field("Scene", "bs" + i, String(c.scene), "type=number min=0 max=500 style=width:5em");
+    h += field("Input / track", "bc" + i, String(c.ch), "type=number min=0 max=128 style=width:5em");
+    h += field("Scene input (0 = keep)", "bi" + i, String(c.input), "type=number min=0 max=64 style=width:5em");
+    h += "<label>Player<select name=bp" + i + ">";
+    for (int p = 0; p < 3; p++)
+      h += "<option value=" + String(p) + (c.player == p ? " selected>" : ">") + PLAYER_NAMES[p] + "</option>";
+    h += "</select></label>";
     h += "</div>";
   }
   h += F("</fieldset><fieldset><legend>Feel and LEDs</legend>");
@@ -113,11 +128,15 @@ void handleSave() {
     cfg.knob[k].type = numArg("kt" + i, 0, 4, cfg.knob[k].type);
     cfg.knob[k].ch = numArg("kc" + i, 1, 64, cfg.knob[k].ch);
   }
-  for (int b = 0; b < 4; b++) {
+  for (int b = 0; b < NUM_BUTTONS; b++) {
     String i(b);
-    copyArg(("bl" + i).c_str(), cfg.button[b].label, sizeof(cfg.button[b].label));
-    cfg.button[b].scene = numArg("bs" + i, 0, 500, cfg.button[b].scene);
-    cfg.button[b].input = numArg("bi" + i, 0, 64, cfg.button[b].input);
+    ButtonCfg &c = cfg.button[b];
+    copyArg(("bl" + i).c_str(), c.label, sizeof(c.label));
+    c.type = numArg("bt" + i, 0, 3, c.type);
+    c.scene = numArg("bs" + i, 0, 500, c.scene);
+    c.input = numArg("bi" + i, 0, 64, c.input);
+    c.ch = numArg("bc" + i, 0, 128, c.ch);
+    c.player = numArg("bp" + i, 0, 2, c.player);
   }
   cfg.step = numArg("step", 1, 10, cfg.step);
   cfg.brightness = numArg("br", 5, MAX_BRIGHTNESS, cfg.brightness);

@@ -1,6 +1,6 @@
 // AHM wall panel firmware for the Olimex ESP32-POE
 //
-// 4 encoders with LED rings set levels; 4 lit buttons recall scenes on an Allen & Heath AHM
+// 4 encoders with LED rings set levels; 5 lit buttons (ON/OFF for the amps, 3 scenes, BEL plays a sample) on an Allen & Heath AHM
 // over its TCP control protocol (port 51325). The rings follow level changes made elsewhere and turn red if a channel is muted elsewhere.
 //
 // Arduino IDE: board "OLIMEX ESP32-PoE" (esp32 by Espressif, 2.x or 3.x), library "Adafruit NeoPixel".
@@ -31,7 +31,9 @@ struct Knob {
   uint32_t lastSend = 0, lastTurn = 0;
 } knobs[4];
 
-uint8_t activeButton = 0;
+uint8_t activeButton = 1;
+int8_t powerOn[NUM_BUTTONS] = {-1, -1, -1, -1, -1};   // B_POWER buttons: -1 = not known yet
+uint32_t flashUntil[NUM_BUTTONS] = {0};               // B_SAMPLE buttons light briefly when pressed
 uint8_t sceneInput = 1;          // 1-based input for the "input of active scene" knob
 uint32_t resyncAt = 0;           // re-read all levels at this time (after a scene recall)
 bool ringsDirty = true;
@@ -67,6 +69,8 @@ void activate(uint8_t b) {
 }
 
 void requestAll() {
+  for (int b = 0; b < NUM_BUTTONS; b++)
+    if (cfg.button[b].type == B_POWER && cfg.button[b].ch) ahm.getMute(0, cfg.button[b].ch - 1);
   for (auto &kn : knobs) {
     if (kn.n < 0) continue;
     ahm.getLevel(kn.n, kn.ch);
@@ -87,13 +91,15 @@ void onLevel(uint8_t n, uint8_t ch, uint8_t lv) {
 }
 
 void onMute(uint8_t n, uint8_t ch, bool on) {
+  for (int b = 0; b < NUM_BUTTONS; b++)
+    if (cfg.button[b].type == B_POWER && n == 0 && ch + 1 == cfg.button[b].ch) { powerOn[b] = !on; ringsDirty = true; }
   for (auto &kn : knobs)
     if (kn.n == n && kn.ch == ch) { kn.mute = on; ringsDirty = true; }
 }
 
 void onScene(uint16_t scene) {
-  for (int b = 0; b < 4; b++)
-    if (cfg.button[b].scene == scene) activate(b);
+  for (int b = 0; b < NUM_BUTTONS; b++)
+    if (cfg.button[b].type == B_SCENE && cfg.button[b].scene == scene) activate(b);
   resyncAt = millis() + 300;
 }
 
@@ -151,6 +157,10 @@ String statusText() {
   s += "AHM:       " + String(cfg.ahmIp) + ":" + String(cfg.ahmPort) + (ahm.connected() ? "  connected" : "  NOT connected") + "\n";
   s += "I/O board: " + String(mcpOk ? "ok" : "NOT found") + "\n";
   s += "Scene:     " + String(cfg.button[activeButton].label) + " (scene " + String(cfg.button[activeButton].scene) + ")\n";
+  for (int b = 0; b < NUM_BUTTONS; b++)
+    if (cfg.button[b].type == B_POWER)
+      s += String(cfg.button[b].label) + ":    " + (powerOn[b] < 0 ? "?" : powerOn[b] ? "on" : "off") +
+           " (input " + String(cfg.button[b].ch) + " " + (powerOn[b] == 0 ? "muted" : "unmuted") + ")\n";
   const char *types[] = {"Input", "Zone", "CG"};
   for (int k = 0; k < 4; k++) {
     const Knob &kn = knobs[k];
@@ -192,8 +202,40 @@ void drawRings() {
     }
   }
   bool blink = (millis() / 500) % 2;
-  setButtonLeds(ahm.connected() || blink ? 1 << activeButton : 0);
+  uint8_t mask = 0;
+  if (ahm.connected() || blink) mask |= 1 << activeButton;
+  for (int b = 0; b < NUM_BUTTONS; b++) {
+    if (cfg.button[b].type == B_POWER && powerOn[b] == 1) mask |= 1 << b;
+    if (millis() < flashUntil[b]) mask |= 1 << b;
+  }
+  setButtonLeds(mask);
   rings.show();
+}
+
+// ---------- buttons ----------
+
+void pressButton(int b) {
+  const ButtonCfg &c = cfg.button[b];
+  if (!ahm.connected()) return;
+  switch (c.type) {
+    case B_SCENE:
+      if (!c.scene) break;
+      ahm.recallScene(c.scene);
+      activate(b);
+      resyncAt = millis() + 300;
+      break;
+    case B_POWER:   // muted = amps off. Unknown state: switch on.
+      if (!c.ch) break;
+      ahm.setMute(0, c.ch - 1, powerOn[b] == 1);
+      powerOn[b] = powerOn[b] == 1 ? 0 : 1;   // the AHM confirms with a mute message
+      break;
+    case B_SAMPLE:
+      if (!c.ch) break;
+      ahm.playTrack(c.player, c.ch - 1);
+      flashUntil[b] = millis() + 1000;
+      break;
+  }
+  ringsDirty = true;
 }
 
 // ---------- main ----------
@@ -256,13 +298,10 @@ void loop() {
 
   takePushes();   // knob presses do nothing (no mute on this panel)
 
-  // scene buttons
+  // buttons: ON/OFF, IPAD, DJ, EXTRA on the ladder, BEL on the MCP23017 (PCB)
   int b = pollLadder();
-  if (b >= 0 && cfg.button[b].scene && ahm.connected()) {
-    ahm.recallScene(cfg.button[b].scene);
-    activate(b);
-    resyncAt = millis() + 300;
-  }
+  if (b >= 0) pressButton(b);
+  if (takeBel()) pressButton(4);
 
   if (resyncAt && millis() > resyncAt) {
     resyncAt = 0;
