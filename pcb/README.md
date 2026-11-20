@@ -15,7 +15,7 @@ MCP23017 sit on it. One 10-wire UEXT cable and one 2-wire 5 V cable go to the Ol
 - Behind the board there are ~27 mm left for the Olimex and the cables (35 mm box).
 - Faceplate for this board: `openscad -D PCB=true -D 'part="faceplate"' 3d/ahm-panel.scad` (`3d/faceplate-pcb.stl`).
   It has light tubes round each LED window so the LEDs don't bleed into each other, and no ring pockets.
-- Button caps: `3d/buttoncap.stl`, print 4 in clear/natural PETG. They sit on the switches, flange behind the faceplate,
+- Button caps: `3d/buttoncap.stl`, print 5 per panel in clear/natural PETG. They sit on the switches, flange behind the faceplate,
   and a WS2812B (the same 5050 LED as the rings) under each flange lights the cap.
 
 ![section](../3d/render-pcb-fit.png)
